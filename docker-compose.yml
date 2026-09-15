@@ -1,0 +1,71 @@
+# Greta's Game for fun - full stack in containers.
+#
+#   docker compose up --build
+#   open http://localhost:3000
+#
+# Expects the web repo checked out next to this one: ../gretas-game-web
+# Set POSTGRES_PASSWORD in a .env file (or the shell) to override the dev default.
+
+name: gretas-game
+
+x-connection: &connection
+  ConnectionStrings__gretasgame: "Host=postgres;Port=5432;Database=gretasgame;Username=postgres;Password=${POSTGRES_PASSWORD:-gretas-dev}"
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gretas-dev}
+      POSTGRES_DB: gretasgame
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d gretasgame"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  migrations:
+    build:
+      context: .
+      dockerfile: src/GretasGame.MigrationService/Dockerfile
+    environment:
+      <<: *connection
+      DOTNET_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    build:
+      context: .
+      dockerfile: src/GretasGame.Api/Dockerfile
+    environment:
+      <<: *connection
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_HTTP_PORTS: "8080"
+    ports:
+      # 5081 on the host so it doesn't collide with `aspire run` (5080).
+      - "5081:8080"
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ../gretas-game-web
+    environment:
+      API_URL: http://api:8080
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  pgdata:
