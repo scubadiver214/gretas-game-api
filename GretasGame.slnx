@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GretasGame.Api/GretasGame.Api.csproj" />
+    <Project Path="src/GretasGame.Migrations/GretasGame.Migrations.csproj" />
+    <Project Path="src/GretasGame.MigrationService/GretasGame.MigrationService.csproj" />
+    <Project Path="src/GretasGame.ServiceDefaults/GretasGame.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GretasGame.Api.Tests/GretasGame.Api.Tests.csproj" />
+  </Folder>
+</Solution>
