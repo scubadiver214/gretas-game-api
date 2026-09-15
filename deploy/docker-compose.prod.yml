@@ -1,0 +1,117 @@
+# Greta's Game for fun - production stack for a single VPS.
+#
+#   cp deploy/.env.example deploy/.env   # then edit DOMAIN + POSTGRES_PASSWORD
+#   docker compose -f deploy/docker-compose.prod.yml --env-file deploy/.env up -d --build
+#
+# Caddy terminates TLS (automatic Let's Encrypt certificates for $DOMAIN) and
+# proxies to the Next.js app. The API and Postgres are only reachable on the
+# internal network; the browser talks to the API through the Next.js /api proxy.
+#
+# Images: built from the two sibling repos by default. To deploy prebuilt images
+# from a registry instead, set WEB_IMAGE / API_IMAGE / MIGRATIONS_IMAGE in .env
+# (see the GitHub Actions workflows in each repo) and drop the `build:` keys.
+
+name: gretas-game-prod
+
+x-connection: &connection
+  ConnectionStrings__gretasgame: "Host=postgres;Port=5432;Database=gretasgame;Username=postgres;Password=${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in deploy/.env}"
+
+x-logging: &logging
+  logging:
+    driver: json-file
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DOMAIN: ${DOMAIN:?set DOMAIN in deploy/.env}
+      ACME_EMAIL: ${ACME_EMAIL:-}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    <<: *logging
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: gretasgame
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d gretasgame"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    <<: *logging
+
+  migrations:
+    image: ${MIGRATIONS_IMAGE:-gretas-game/migrations:local}
+    build:
+      context: ..
+      dockerfile: src/GretasGame.MigrationService/Dockerfile
+    environment:
+      <<: *connection
+      DOTNET_ENVIRONMENT: Production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+    <<: *logging
+
+  api:
+    image: ${API_IMAGE:-gretas-game/api:local}
+    build:
+      context: ..
+      dockerfile: src/GretasGame.Api/Dockerfile
+    restart: unless-stopped
+    environment:
+      <<: *connection
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_HTTP_PORTS: "8080"
+    expose:
+      - "8080"
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+    healthcheck:
+      # The aspnet base image ships neither curl nor wget; bash's /dev/tcp is enough for a liveness probe.
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/127.0.0.1/8080"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    <<: *logging
+
+  web:
+    image: ${WEB_IMAGE:-gretas-game/web:local}
+    build:
+      context: ../../gretas-game-web
+    restart: unless-stopped
+    environment:
+      API_URL: http://api:8080
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+      NODE_ENV: production
+    expose:
+      - "3000"
+    depends_on:
+      - api
+    <<: *logging
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

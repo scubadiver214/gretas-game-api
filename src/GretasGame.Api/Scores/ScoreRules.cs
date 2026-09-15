@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace GretasGame.Api.Scores;
@@ -13,6 +14,10 @@ public static partial class ScoreRules
     public const int DefaultTopLimit = 20;
     public const int MaxTopLimit = 100;
     public const int MaxDurationSeconds = 600;
+    public const int MinLevel = 1;
+    public const int MaxLevel = 5;
+    /// <summary>Daily-challenge submissions may be up to this many days old (time zones, slow finishes).</summary>
+    public const int ChallengeDateGraceDays = 1;
 
     public static readonly IReadOnlySet<string> Modes = new HashSet<string>(StringComparer.Ordinal) { "kitchen", "delivery" };
     public static readonly IReadOnlySet<string> Characters = new HashSet<string>(StringComparer.Ordinal) { "boy", "girl" };
@@ -20,12 +25,17 @@ public static partial class ScoreRules
     /// <summary>Generous upper bounds so obviously forged scores are rejected.</summary>
     public static readonly IReadOnlyDictionary<string, int> MaxScoreByMode = new Dictionary<string, int>
     {
-        ["kitchen"] = 300,
-        ["delivery"] = 3000,
+        // Level 5 kitchen: 5 orders x (6 toppings x 10 + 25 perfect) = 425.
+        ["kitchen"] = 1000,
+        // 60 s at max speed is roughly 100 mailboxes x 35 with combos.
+        ["delivery"] = 5000,
     };
 
     [GeneratedRegex(@"^[\p{L}\p{N} _'-]+$")]
     private static partial Regex NicknamePattern();
+
+    [GeneratedRegex(@"^#[0-9A-Fa-f]{6}$")]
+    private static partial Regex ColorPattern();
 
     public static string NormalizeNickname(string raw) =>
         WhitespaceRun().Replace(raw.Trim(), " ");
@@ -36,7 +46,21 @@ public static partial class ScoreRules
     public static string NicknameKey(string normalizedNickname) =>
         normalizedNickname.ToLowerInvariant();
 
-    public static IReadOnlyDictionary<string, string[]> Validate(SubmitScoreRequest request)
+    public static bool IsValidColor(string? color) =>
+        color is not null && ColorPattern().IsMatch(color);
+
+    /// <summary>Parses a yyyy-MM-dd challenge date key.</summary>
+    public static bool TryParseChallengeDate(string? raw, out DateOnly date) =>
+        DateOnly.TryParseExact(raw, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+
+    /// <summary>A challenge date must be today (UTC) or within the grace window.</summary>
+    public static bool IsChallengeDateOpen(DateOnly date, DateOnly todayUtc) =>
+        date <= todayUtc && todayUtc.DayNumber - date.DayNumber <= ChallengeDateGraceDays;
+
+    public static IReadOnlyDictionary<string, string[]> Validate(SubmitScoreRequest request) =>
+        Validate(request, DateOnly.FromDateTime(DateTime.UtcNow));
+
+    public static IReadOnlyDictionary<string, string[]> Validate(SubmitScoreRequest request, DateOnly todayUtc)
     {
         var errors = new Dictionary<string, List<string>>();
         void Add(string field, string message)
@@ -53,6 +77,9 @@ public static partial class ScoreRules
         if (string.IsNullOrEmpty(request.Character) || !Characters.Contains(request.Character))
             Add(nameof(request.Character), $"Character must be one of: {string.Join(", ", Characters)}.");
 
+        if (request.Color is not null && !IsValidColor(request.Color))
+            Add(nameof(request.Color), "Color must be a #RRGGBB hex value.");
+
         if (string.IsNullOrEmpty(request.Mode) || !Modes.Contains(request.Mode))
         {
             Add(nameof(request.Mode), $"Mode must be one of: {string.Join(", ", Modes)}.");
@@ -64,8 +91,19 @@ public static partial class ScoreRules
             if (request.Score > max) Add(nameof(request.Score), $"Score cannot exceed {max} for {request.Mode}.");
         }
 
+        if (request.Level < MinLevel || request.Level > MaxLevel)
+            Add(nameof(request.Level), $"Level must be between {MinLevel} and {MaxLevel}.");
+
         if (request.DurationSeconds < 1 || request.DurationSeconds > MaxDurationSeconds)
             Add(nameof(request.DurationSeconds), $"Duration must be between 1 and {MaxDurationSeconds} seconds.");
+
+        if (request.ChallengeDate is not null)
+        {
+            if (!TryParseChallengeDate(request.ChallengeDate, out var date))
+                Add(nameof(request.ChallengeDate), "ChallengeDate must be a yyyy-MM-dd date.");
+            else if (!IsChallengeDateOpen(date, todayUtc))
+                Add(nameof(request.ChallengeDate), "That daily challenge is closed.");
+        }
 
         return errors.ToDictionary(kv => kv.Key, kv => kv.Value.ToArray());
     }

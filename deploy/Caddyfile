@@ -1,0 +1,21 @@
+{
+	# Optional: e-mail for Let's Encrypt expiry notices.
+	email {$ACME_EMAIL}
+}
+
+{$DOMAIN} {
+	encode zstd gzip
+
+	# Long cache for Next.js immutable build assets and the character models.
+	@static path /_next/static/* /models/*
+	header @static Cache-Control "public, max-age=31536000, immutable"
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+
+	reverse_proxy web:3000
+}

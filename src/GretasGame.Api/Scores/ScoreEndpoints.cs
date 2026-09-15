@@ -14,7 +14,7 @@ public static class ScoreEndpoints
 
         group.MapGet("/scores/top", GetTopAsync)
             .WithName("GetTopScores")
-            .WithSummary("Top scores for a game mode.");
+            .WithSummary("Top scores for a game mode; pass date=yyyy-MM-dd for that day's daily-challenge board.");
 
         group.MapGet("/players/{nickname}/best", GetPersonalBestsAsync)
             .WithName("GetPersonalBests")
@@ -32,23 +32,38 @@ public static class ScoreEndpoints
             return TypedResults.ValidationProblem(errors);
         }
 
-        var nickname = ScoreRules.NormalizeNickname(request.Nickname);
-        var result = await repo.SubmitAsync(nickname, request.Character, request.Mode, request.Score, request.DurationSeconds, ct);
+        DateOnly? challengeDate = ScoreRules.TryParseChallengeDate(request.ChallengeDate, out var parsed) ? parsed : null;
+        var score = new NewScore(
+            ScoreRules.NormalizeNickname(request.Nickname),
+            request.Character,
+            request.Color,
+            request.Mode,
+            request.Score,
+            request.Level,
+            request.DurationSeconds,
+            challengeDate);
+
+        var result = await repo.SubmitAsync(score, ct);
         return TypedResults.Created($"/api/scores/{result.Id}", result);
     }
 
     private static async Task<Results<Ok<IReadOnlyList<ScoreEntry>>, ValidationProblem>> GetTopAsync(
-        string mode, int? limit, IScoreRepository repo, CancellationToken ct)
+        string mode, int? limit, string? date, IScoreRepository repo, CancellationToken ct)
     {
+        var errors = new Dictionary<string, string[]>();
         if (!ScoreRules.Modes.Contains(mode))
+            errors["mode"] = [$"Mode must be one of: {string.Join(", ", ScoreRules.Modes)}."];
+
+        DateOnly? challengeDate = null;
+        if (date is not null)
         {
-            return TypedResults.ValidationProblem(new Dictionary<string, string[]>
-            {
-                ["mode"] = [$"Mode must be one of: {string.Join(", ", ScoreRules.Modes)}."],
-            });
+            if (ScoreRules.TryParseChallengeDate(date, out var parsed)) challengeDate = parsed;
+            else errors["date"] = ["date must be a yyyy-MM-dd date."];
         }
 
-        var rows = await repo.GetTopAsync(mode, ScoreRules.ClampLimit(limit), ct);
+        if (errors.Count > 0) return TypedResults.ValidationProblem(errors);
+
+        var rows = await repo.GetTopAsync(mode, ScoreRules.ClampLimit(limit), challengeDate, ct);
         return TypedResults.Ok(rows);
     }
 
