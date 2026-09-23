@@ -91,42 +91,15 @@ Restore with `gunzip -c file.sql.gz | docker compose ... exec -T postgres psql -
 
 ## 2. Aspire → Azure Container Apps
 
-The AppHost (`apphost.cs`) already describes the whole system, so Aspire can publish it. This
-needs an Azure subscription and the Azure CLI; it is documented rather than committed because
-adding the Azure hosting package changes the AppHost's run-mode requirements.
+The Azure path is now wired into the AppHost itself:
 
-```sh
-# Tools
-brew install azure-cli && az login
+- Azure Container Apps for `web` and `api`
+- Azure Container Apps Job for `migrations`
+- Azure Database for PostgreSQL Flexible Server for cloud deploys
+- Application Insights for backend telemetry
 
-# 1. Add the Azure Container Apps hosting integration to the AppHost
-aspire add azure-appcontainers          # adds #:package Aspire.Hosting.Azure.AppContainers
-```
+Use the dedicated runbook for step-by-step setup, deployment, DNS, and GitHub Actions configuration:
 
-Then in `apphost.cs`, before the resources:
-
-```csharp
-builder.AddAzureContainerAppEnvironment("env");
-```
-
-and swap the local Postgres for a managed one when you're ready (optional - the container also works on ACA):
-
-```csharp
-// #:package Aspire.Hosting.Azure.PostgreSQL
-var postgres = builder.AddAzurePostgresFlexibleServer("postgres")
-    .RunAsContainer(c => c.WithDataVolume("gretas-game-postgres").WithPgWeb()); // local dev unchanged
-```
-
-Publish and deploy:
-
-```sh
-aspire publish -o ./publish        # emits Bicep + container image build steps
-aspire deploy                      # builds images, pushes to ACR, applies Bicep (prompts for subscription/location)
-```
-
-Notes:
-
-- `WithExternalHttpEndpoints()` on `web` becomes the public ingress; the API stays internal, exactly like the compose setup.
-- The Next.js image is built from `../gretas-game-web` by the AppHost's `AddNextJsApp` resource, so keep the two repos side by side on the machine (or CI runner) doing the deploy.
-- Set `API_URL` is already wired via `api.GetEndpoint("http")`; nothing else to configure.
-- Costs: ACA consumption plan + a Basic Postgres Flexible Server is a few dollars a month at hobby scale; scale-to-zero keeps idle cost near zero.
+- [`../docs/deploy/azure.md`](../docs/deploy/azure.md)
+- [`../docs/deploy/azure-environment-handoff.md`](../docs/deploy/azure-environment-handoff.md)
+- [`../docs/deploy/cicd-next-steps.md`](../docs/deploy/cicd-next-steps.md)

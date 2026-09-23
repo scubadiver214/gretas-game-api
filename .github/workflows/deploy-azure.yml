@@ -1,0 +1,99 @@
+name: Deploy to Azure
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    name: Deploy Aspire app to Azure
+    runs-on: ubuntu-latest
+    environment:
+      name: azure-staging
+
+    steps:
+      - name: Checkout API repo
+        uses: actions/checkout@v4
+        with:
+          path: gretas-game-api
+
+      - name: Checkout web repo
+        uses: actions/checkout@v4
+        with:
+          repository: scubadiver214/gretas-game-web
+          path: gretas-game-web
+          token: ${{ secrets.WEB_REPO_READ_TOKEN != '' && secrets.WEB_REPO_READ_TOKEN || github.token }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: gretas-game-api/global.json
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: gretas-game-web/pnpm-lock.yaml
+
+      - name: Install Aspire CLI
+        run: |
+          curl -sSL https://aspire.dev/install.sh | bash
+          echo "$HOME/.aspire/bin" >> "$GITHUB_PATH"
+
+      - name: Restore web dependencies
+        working-directory: gretas-game-web
+        run: pnpm install --frozen-lockfile
+
+      - name: Test API
+        working-directory: gretas-game-api
+        run: dotnet test GretasGame.slnx -c Release
+
+      - name: Test web
+        working-directory: gretas-game-web
+        run: |
+          pnpm lint
+          pnpm typecheck
+          pnpm test
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy with Aspire
+        working-directory: gretas-game-api
+        run: aspire deploy --apphost ./apphost.cs --environment "${{ vars.AZURE_ENVIRONMENT_NAME || 'Staging' }}" --non-interactive
+        env:
+          Azure__SubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          Azure__Location: ${{ vars.AZURE_LOCATION }}
+          Azure__ResourceGroup: ${{ vars.AZURE_RESOURCE_GROUP }}
+          Azure__CredentialProcessTimeoutSeconds: 120
+          Parameters__customDomain: ${{ vars.CUSTOM_DOMAIN || '' }}
+          Parameters__certificateName: ${{ vars.CUSTOM_DOMAIN_CERTIFICATE_NAME || '' }}
+
+      - name: Run migrations job
+        env:
+          AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+        run: |
+          az containerapp job start \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --name migrations
+
+      - name: Show migration executions
+        if: always()
+        env:
+          AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
+        run: |
+          az containerapp job execution list \
+            --resource-group "$AZURE_RESOURCE_GROUP" \
+            --name migrations \
+            --output table

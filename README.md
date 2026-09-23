@@ -82,4 +82,9 @@ dotnet test
 
 ## Deploy
 
-See [`deploy/README.md`](deploy/README.md) for the two supported paths: `deploy/docker-compose.prod.yml` + Caddy (automatic HTTPS) on any VPS using the images published to GHCR by `.github/workflows/publish-image.yml`, or `aspire deploy` to Azure Container Apps.
+See [`deploy/README.md`](deploy/README.md) for the two supported paths:
+
+- `deploy/docker-compose.prod.yml` + Caddy (automatic HTTPS) on any VPS using the images published to GHCR by `.github/workflows/publish-image.yml`
+- Azure Container Apps via Aspire; the Azure-specific runbook lives at [`docs/deploy/azure.md`](docs/deploy/azure.md)
+- the current Azure environment handoff lives at [`docs/deploy/azure-environment-handoff.md`](docs/deploy/azure-environment-handoff.md)
+- CI/CD follow-up planning lives at [`docs/deploy/cicd-next-steps.md`](docs/deploy/cicd-next-steps.md)
