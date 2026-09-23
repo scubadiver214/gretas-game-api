@@ -71,10 +71,20 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      - name: Write OIDC token for Aspire WorkloadIdentityCredential
+        run: |
+          TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=api://AzureADTokenExchange" | jq -r '.value')
+          echo "$TOKEN" > /tmp/azure-oidc-token.txt
+
       - name: Deploy with Aspire
         working-directory: gretas-game-api
         run: aspire deploy --apphost ./apphost.cs --environment "${{ vars.AZURE_ENVIRONMENT_NAME || 'Staging' }}" --non-interactive
         env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_FEDERATED_TOKEN_FILE: /tmp/azure-oidc-token.txt
           Azure__SubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           Azure__Location: ${{ vars.AZURE_LOCATION }}
           Azure__ResourceGroup: ${{ vars.AZURE_RESOURCE_GROUP }}
