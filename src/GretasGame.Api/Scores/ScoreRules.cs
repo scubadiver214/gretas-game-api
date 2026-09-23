@@ -19,7 +19,7 @@ public static partial class ScoreRules
     /// <summary>Daily-challenge submissions may be up to this many days old (time zones, slow finishes).</summary>
     public const int ChallengeDateGraceDays = 1;
 
-    public static readonly IReadOnlySet<string> Modes = new HashSet<string>(StringComparer.Ordinal) { "kitchen", "delivery" };
+    public static readonly IReadOnlySet<string> Modes = new HashSet<string>(StringComparer.Ordinal) { "kitchen", "delivery", "wordle" };
     public static readonly IReadOnlySet<string> Characters = new HashSet<string>(StringComparer.Ordinal) { "boy", "girl" };
 
     /// <summary>Generous upper bounds so obviously forged scores are rejected.</summary>
@@ -29,6 +29,8 @@ public static partial class ScoreRules
         ["kitchen"] = 1000,
         // 60 s at max speed is roughly 100 mailboxes x 35 with combos.
         ["delivery"] = 5000,
+        // Level 5: 5 words x (100 base + 20 length bonus) solved first try = 600.
+        ["wordle"] = 800,
     };
 
     [GeneratedRegex(@"^[\p{L}\p{N} _'-]+$")]

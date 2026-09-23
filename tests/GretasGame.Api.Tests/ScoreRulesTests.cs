@@ -67,6 +67,8 @@ public class ScoreRulesTests
     [InlineData("kitchen", 1001, false)]
     [InlineData("delivery", 5000, true)]
     [InlineData("delivery", 99999, false)]
+    [InlineData("wordle", 800, true)]
+    [InlineData("wordle", 801, false)]
     public void Bounds_scores_per_mode(string mode, int score, bool ok)
     {
         var errors = ScoreRules.Validate(Valid() with { Mode = mode, Score = score });

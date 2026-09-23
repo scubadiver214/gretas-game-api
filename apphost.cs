@@ -27,9 +27,6 @@ var hasCustomDomainBinding =
 var customDomain = hasCustomDomainBinding ? builder.AddParameter("customDomain") : null;
 var certificateName = hasCustomDomainBinding ? builder.AddParameter("certificateName") : null;
 
-var appInsights = builder.AddAzureApplicationInsights("appinsights");
-builder.AddAzureContainerAppEnvironment("aca-env");
-
 var postgres = builder.AddAzurePostgresFlexibleServer("postgres")
     .RunAsContainer(container => container
         .WithDataVolume("gretas-game-postgres")
@@ -40,17 +37,10 @@ var db = postgres.AddDatabase("gretasgame");
 
 var migrations = builder.AddProject<Projects.GretasGame_MigrationService>("migrations")
     .WithReference(db)
-    .WithReference(appInsights)
     .WaitFor(db);
-
-if (builder.ExecutionContext.IsPublishMode)
-{
-    migrations.PublishAsAzureContainerAppJob();
-}
 
 var api = builder.AddProject<Projects.GretasGame_Api>("api")
     .WithReference(db)
-    .WithReference(appInsights)
     .WaitForCompletion(migrations)
     .WithHttpHealthCheck("/health")
     .WithEnvironment("HealthChecks__ExposeHttpEndpoints", "true");
@@ -58,6 +48,16 @@ var api = builder.AddProject<Projects.GretasGame_Api>("api")
 if (builder.ExecutionContext.IsRunMode)
 {
     api.WithExternalHttpEndpoints();
+}
+else
+{
+    // Azure telemetry and the Container Apps environment are deployment-only.
+    // They must not exist in the local resource graph, where their missing
+    // Azure connection string would block migrations, API, and web startup.
+    var appInsights = builder.AddAzureApplicationInsights("appinsights");
+    builder.AddAzureContainerAppEnvironment("aca-env");
+    migrations.WithReference(appInsights).PublishAsAzureContainerAppJob();
+    api.WithReference(appInsights);
 }
 
 // The web app lives in its own repo next to this one.

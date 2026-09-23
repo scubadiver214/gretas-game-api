@@ -55,13 +55,13 @@ Then open <http://localhost:3000>. The API is also exposed on <http://localhost:
 | Method | Route                            | Notes                                                        |
 | ------ | -------------------------------- | ------------------------------------------------------------ |
 | POST   | `/api/scores`                    | `{ nickname, character, color?, mode, score, level, durationSeconds, challengeDate? }` -> upserts the player (and colour), inserts the score, returns `{ id, rank, isPersonalBest }`. With `challengeDate` the rank is on that day's board (best per player). |
-| GET    | `/api/scores/top?mode=kitchen&limit=20` | Ranked all-time leaderboard for a mode (`kitchen` or `delivery`), with each player's colour and level |
+| GET    | `/api/scores/top?mode=kitchen&limit=20` | Ranked all-time leaderboard for a mode (`kitchen`, `delivery`, or `wordle`), with each player's colour and level |
 | GET    | `/api/scores/top?mode=kitchen&date=2026-09-15` | Daily-challenge board for that UTC date: one entry (best score) per player |
 | GET    | `/api/players/{nickname}/best`   | Personal best per mode for a nickname                        |
 | GET    | `/health`, `/alive`              | Health checks (development only, from ServiceDefaults)       |
 | GET    | `/openapi/v1.json`               | OpenAPI document (development only)                          |
 
-Validation lives in `Scores/ScoreRules.cs` and mirrors the client: nickname 2-16 characters (letters, digits, spaces, `_` `'` `-`), character `boy`/`girl`, optional colour `#rrggbb`, mode `kitchen`/`delivery`, level 1-5, score 0-1000 (kitchen) or 0-5000 (delivery), duration 0-600 s, `challengeDate` as `yyyy-MM-dd` and no older than yesterday (UTC), `limit` at most 100.
+Validation lives in `Scores/ScoreRules.cs` and mirrors the client: nickname 2-16 characters (letters, digits, spaces, `_` `'` `-`), character `boy`/`girl`, optional colour `#rrggbb`, mode `kitchen`/`delivery`/`wordle`, level 1-5, score 0-1000 (kitchen), 0-5000 (delivery) or 0-800 (wordle), duration 0-600 s, `challengeDate` as `yyyy-MM-dd` and no older than yesterday (UTC), `limit` at most 100.
 
 ## Database
 
