@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\GretasGame.Api\GretasGame.Api.csproj" />
+    <ProjectReference Include="..\..\src\GretasGame.ServiceDefaults\GretasGame.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

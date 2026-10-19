@@ -8,6 +8,7 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.AddServiceDefaults();
 
 // Aspire (or docker-compose) injects ConnectionStrings__gretasgame.
+AzurePostgresConnection.RequireTls(builder.Configuration, "gretasgame");
 builder.AddNpgsqlDataSource("gretasgame");
 
 builder.Services
