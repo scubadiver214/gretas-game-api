@@ -27,11 +27,22 @@ var hasCustomDomainBinding =
 var customDomain = hasCustomDomainBinding ? builder.AddParameter("customDomain") : null;
 var certificateName = hasCustomDomainBinding ? builder.AddParameter("certificateName") : null;
 
+// Publish mode must reuse the server's existing administrator. A fresh
+// generated login is written to Key Vault on every deploy, but Azure will
+// not change the administrator of an existing Flexible Server.
+IResourceBuilder<ParameterResource>? postgresUsername = null;
+IResourceBuilder<ParameterResource>? postgresPassword = null;
+if (!builder.ExecutionContext.IsRunMode)
+{
+    postgresUsername = builder.AddParameter("postgres-username");
+    postgresPassword = builder.AddParameter("postgres-password", secret: true);
+}
+
 var postgres = builder.AddAzurePostgresFlexibleServer("postgres")
     .RunAsContainer(container => container
         .WithDataVolume("gretas-game-postgres")
         .WithPgWeb())
-    .WithPasswordAuthentication();
+    .WithPasswordAuthentication(postgresUsername, postgresPassword);
 
 var db = postgres.AddDatabase("gretasgame");
 

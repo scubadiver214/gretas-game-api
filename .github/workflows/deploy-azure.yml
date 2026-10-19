@@ -94,6 +94,8 @@ jobs:
           Azure__CredentialProcessTimeoutSeconds: 120
           Parameters__customDomain: ${{ vars.CUSTOM_DOMAIN || '' }}
           Parameters__certificateName: ${{ vars.CUSTOM_DOMAIN_CERTIFICATE_NAME || '' }}
+          Parameters__postgres-username: ${{ secrets.POSTGRES_ADMIN_USERNAME }}
+          Parameters__postgres-password: ${{ secrets.POSTGRES_ADMIN_PASSWORD }}
 
       - name: Run migrations job
         env:
