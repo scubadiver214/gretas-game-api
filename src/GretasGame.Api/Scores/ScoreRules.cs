@@ -19,7 +19,15 @@ public static partial class ScoreRules
     /// <summary>Daily-challenge submissions may be up to this many days old (time zones, slow finishes).</summary>
     public const int ChallengeDateGraceDays = 1;
 
-    public static readonly IReadOnlySet<string> Modes = new HashSet<string>(StringComparer.Ordinal) { "kitchen", "delivery", "wordle" };
+    /// <summary>Every game with a leaderboard.</summary>
+    public static readonly IReadOnlySet<string> LeaderboardModes = new HashSet<string>(StringComparer.Ordinal) { "kitchen", "delivery", "wordle", "frogger" };
+
+    /// <summary>
+    /// Games whose clients post a finished round straight to <c>POST /api/scores</c>.
+    /// The rest (frogger) must go through a server-tracked game session.
+    /// </summary>
+    public static readonly IReadOnlySet<string> DirectSubmitModes = new HashSet<string>(StringComparer.Ordinal) { "kitchen", "delivery", "wordle" };
+
     public static readonly IReadOnlySet<string> Characters = new HashSet<string>(StringComparer.Ordinal) { "boy", "girl" };
 
     /// <summary>Generous upper bounds so obviously forged scores are rejected.</summary>
@@ -64,52 +72,77 @@ public static partial class ScoreRules
 
     public static IReadOnlyDictionary<string, string[]> Validate(SubmitScoreRequest request, DateOnly todayUtc)
     {
-        var errors = new Dictionary<string, List<string>>();
-        void Add(string field, string message)
+        var errors = new ValidationErrors();
+
+        ValidatePlayer(errors, request.Nickname, request.Character, request.Color);
+
+        if (string.IsNullOrEmpty(request.Mode) || !LeaderboardModes.Contains(request.Mode))
         {
-            if (!errors.TryGetValue(field, out var list)) errors[field] = list = [];
-            list.Add(message);
+            errors.Add(nameof(request.Mode), $"Mode must be one of: {string.Join(", ", DirectSubmitModes)}.");
         }
-
-        var nickname = NormalizeNickname(request.Nickname ?? string.Empty);
-        if (nickname.Length < NicknameMin) Add(nameof(request.Nickname), $"Nickname must be at least {NicknameMin} characters.");
-        if (nickname.Length > NicknameMax) Add(nameof(request.Nickname), $"Nickname must be at most {NicknameMax} characters.");
-        if (nickname.Length > 0 && !NicknamePattern().IsMatch(nickname)) Add(nameof(request.Nickname), "Nickname may only contain letters, numbers, spaces, ' _ -");
-
-        if (string.IsNullOrEmpty(request.Character) || !Characters.Contains(request.Character))
-            Add(nameof(request.Character), $"Character must be one of: {string.Join(", ", Characters)}.");
-
-        if (request.Color is not null && !IsValidColor(request.Color))
-            Add(nameof(request.Color), "Color must be a #RRGGBB hex value.");
-
-        if (string.IsNullOrEmpty(request.Mode) || !Modes.Contains(request.Mode))
+        else if (!DirectSubmitModes.Contains(request.Mode))
         {
-            Add(nameof(request.Mode), $"Mode must be one of: {string.Join(", ", Modes)}.");
+            errors.Add(nameof(request.Mode), $"{request.Mode} scores are saved through game sessions (POST /api/games/{request.Mode}/sessions).");
         }
         else
         {
             var max = MaxScoreByMode[request.Mode];
-            if (request.Score < 0) Add(nameof(request.Score), "Score cannot be negative.");
-            if (request.Score > max) Add(nameof(request.Score), $"Score cannot exceed {max} for {request.Mode}.");
+            if (request.Score < 0) errors.Add(nameof(request.Score), "Score cannot be negative.");
+            if (request.Score > max) errors.Add(nameof(request.Score), $"Score cannot exceed {max} for {request.Mode}.");
         }
 
         if (request.Level < MinLevel || request.Level > MaxLevel)
-            Add(nameof(request.Level), $"Level must be between {MinLevel} and {MaxLevel}.");
+            errors.Add(nameof(request.Level), $"Level must be between {MinLevel} and {MaxLevel}.");
 
         if (request.DurationSeconds < 1 || request.DurationSeconds > MaxDurationSeconds)
-            Add(nameof(request.DurationSeconds), $"Duration must be between 1 and {MaxDurationSeconds} seconds.");
+            errors.Add(nameof(request.DurationSeconds), $"Duration must be between 1 and {MaxDurationSeconds} seconds.");
 
-        if (request.ChallengeDate is not null)
-        {
-            if (!TryParseChallengeDate(request.ChallengeDate, out var date))
-                Add(nameof(request.ChallengeDate), "ChallengeDate must be a yyyy-MM-dd date.");
-            else if (!IsChallengeDateOpen(date, todayUtc))
-                Add(nameof(request.ChallengeDate), "That daily challenge is closed.");
-        }
+        ValidateChallengeDate(errors, request.ChallengeDate, todayUtc);
 
-        return errors.ToDictionary(kv => kv.Key, kv => kv.Value.ToArray());
+        return errors.ToDictionary();
+    }
+
+    /// <summary>Nickname, character and optional colour checks shared by every write endpoint.</summary>
+    public static void ValidatePlayer(ValidationErrors errors, string? rawNickname, string? character, string? color)
+    {
+        var nickname = NormalizeNickname(rawNickname ?? string.Empty);
+        if (nickname.Length < NicknameMin) errors.Add("Nickname", $"Nickname must be at least {NicknameMin} characters.");
+        if (nickname.Length > NicknameMax) errors.Add("Nickname", $"Nickname must be at most {NicknameMax} characters.");
+        if (nickname.Length > 0 && !NicknamePattern().IsMatch(nickname)) errors.Add("Nickname", "Nickname may only contain letters, numbers, spaces, ' _ -");
+
+        if (string.IsNullOrEmpty(character) || !Characters.Contains(character))
+            errors.Add("Character", $"Character must be one of: {string.Join(", ", Characters)}.");
+
+        if (color is not null && !IsValidColor(color))
+            errors.Add("Color", "Color must be a #RRGGBB hex value.");
+    }
+
+    public static void ValidateChallengeDate(ValidationErrors errors, string? challengeDate, DateOnly todayUtc)
+    {
+        if (challengeDate is null) return;
+        if (!TryParseChallengeDate(challengeDate, out var date))
+            errors.Add("ChallengeDate", "ChallengeDate must be a yyyy-MM-dd date.");
+        else if (!IsChallengeDateOpen(date, todayUtc))
+            errors.Add("ChallengeDate", "That daily challenge is closed.");
     }
 
     public static int ClampLimit(int? limit) =>
         Math.Clamp(limit ?? DefaultTopLimit, 1, MaxTopLimit);
+}
+
+/// <summary>Collects field errors in the shape <c>TypedResults.ValidationProblem</c> expects.</summary>
+public sealed class ValidationErrors
+{
+    private readonly Dictionary<string, List<string>> errors = new();
+
+    public int Count => errors.Count;
+
+    public void Add(string field, string message)
+    {
+        if (!errors.TryGetValue(field, out var list)) errors[field] = list = [];
+        list.Add(message);
+    }
+
+    public IReadOnlyDictionary<string, string[]> ToDictionary() =>
+        errors.ToDictionary(kv => kv.Key, kv => kv.Value.ToArray());
 }

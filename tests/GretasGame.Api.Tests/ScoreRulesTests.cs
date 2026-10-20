@@ -60,6 +60,15 @@ public class ScoreRulesTests
         Assert.Contains(nameof(SubmitScoreRequest.Mode), errors.Keys);
     }
 
+    [Fact]
+    public void Rejects_direct_submits_for_session_games()
+    {
+        // Frogger has a leaderboard but its scores must come through a game session.
+        Assert.Contains("frogger", ScoreRules.LeaderboardModes);
+        var errors = ScoreRules.Validate(Valid() with { Mode = "frogger", Score = 100 });
+        Assert.Contains(nameof(SubmitScoreRequest.Mode), errors.Keys);
+    }
+
     [Theory]
     [InlineData("kitchen", -1, false)]
     [InlineData("kitchen", 0, true)]

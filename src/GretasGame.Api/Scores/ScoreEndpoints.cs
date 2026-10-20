@@ -51,8 +51,8 @@ public static class ScoreEndpoints
         string mode, int? limit, string? date, IScoreRepository repo, CancellationToken ct)
     {
         var errors = new Dictionary<string, string[]>();
-        if (!ScoreRules.Modes.Contains(mode))
-            errors["mode"] = [$"Mode must be one of: {string.Join(", ", ScoreRules.Modes)}."];
+        if (!ScoreRules.LeaderboardModes.Contains(mode))
+            errors["mode"] = [$"Mode must be one of: {string.Join(", ", ScoreRules.LeaderboardModes)}."];
 
         DateOnly? challengeDate = null;
         if (date is not null)
