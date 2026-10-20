@@ -86,22 +86,20 @@ The Microsoft Entra custom-domain verification record that was added at the regi
 
 ### Apex Domain
 
-The apex/root domain `gretagames.com` is not bound to the Container App yet.
+The apex/root domain `gretagames.com` is **not** bound to the Container App.
 
-If you later want the apex domain on Azure Container Apps, use:
+Canonical site: `https://www.gretagames.com`
 
-- `A`
-  - name: `@`
-  - value: `48.204.253.79`
-- `TXT`
-  - name: `asuid`
-  - value: `C6B1F298E5D12F506F80D043E2669B23B522CF8FD6F3F5FD1F0DF27C91B9E394`
+GoDaddy domain forwarding sends the apex there:
 
-If you add any `CAA` records, include DigiCert:
+- forward `gretagames.com` → `https://www.gretagames.com`
+- type: Permanent (301)
+- forward only (no masking)
+- do **not** forward `www` — that CNAME must keep pointing at the Container App
 
-```txt
-0 issue "digicert.com"
-```
+GoDaddy will keep its own forwarding A records on `@` (`15.197.148.33` and `3.33.130.190`). Do **not** add an Azure A record for `@`; that IP is shared by the environment and returns 404 unless the hostname is bound.
+
+Do not add an `asuid` TXT at the apex unless you later bind `gretagames.com` in Azure.
 
 ## AppHost Deployment Parameters
 

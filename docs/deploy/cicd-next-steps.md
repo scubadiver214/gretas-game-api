@@ -190,7 +190,7 @@ If you want the highest-value next actions, do these first:
 1. Run the GitHub Actions deploy once using OIDC and confirm it works without local auth.
 2. Add post-deploy smoke checks to the workflow.
 3. Add GitHub environment approval for `azure-staging`.
-4. Decide whether `gretagames.com` should later redirect to `www.gretagames.com`.
+4. Apex redirect is decided: GoDaddy 301 from `gretagames.com` to `https://www.gretagames.com`. Do not bind the apex on the Container App.
 5. Plan a separate production environment before frequent public releases.
 
 ## Recommended Backlog

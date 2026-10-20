@@ -141,16 +141,11 @@ For `www.example.com`, Azure Container Apps managed certificates need:
 
 After the records resolve, bind the hostname and certificate in Azure.
 
-### Optional Apex Domain
+### Apex domain: redirect to `www`
 
-For `example.com`, Azure Container Apps uses:
+Do not bind the apex domain on the Container App. Use registrar forwarding so `example.com` 301s to `https://www.example.com`.
 
-- `A` record:
-  - host: `@`
-  - value: the Azure Container Apps environment static IP
-- `TXT` record:
-  - host: `asuid`
-  - value: the domain verification code
+Keep the `www` CNAME on Azure. Do not add an A record for `@` that points at the Container Apps environment IP unless you also bind that hostname in Azure.
 
 ### CAA Note
 
