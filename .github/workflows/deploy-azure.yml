@@ -16,12 +16,12 @@ jobs:
 
     steps:
       - name: Checkout API repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: gretas-game-api
 
       - name: Checkout web repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: scubadiver214/gretas-game-web
           path: gretas-game-web
