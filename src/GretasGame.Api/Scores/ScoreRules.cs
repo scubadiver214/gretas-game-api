@@ -33,8 +33,8 @@ public static partial class ScoreRules
     /// <summary>Generous upper bounds so obviously forged scores are rejected.</summary>
     public static readonly IReadOnlyDictionary<string, int> MaxScoreByMode = new Dictionary<string, int>
     {
-        // Level 5 kitchen: 5 orders x (6 toppings x 10 + 25 perfect) = 425.
-        ["kitchen"] = 1000,
+        // Lunch Rush: a flawless level-5 shift (~30 premium pizzas at the x3 combo) stays under 14,000.
+        ["kitchen"] = 20000,
         // 60 s at max speed is roughly 100 mailboxes x 35 with combos.
         ["delivery"] = 5000,
         // Level 5: 5 words x (100 base + 20 length bonus) solved first try = 600.
