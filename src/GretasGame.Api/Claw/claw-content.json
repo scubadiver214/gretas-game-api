@@ -1,0 +1,1657 @@
+{
+  "version": 1,
+  "maxLevel": 50,
+  "minGrabCycleSeconds": 1.49,
+  "stars": {
+    "threeWithin": 1,
+    "twoWithin": 3
+  },
+  "prizes": [
+    {
+      "id": "slime-green",
+      "name": "Green Slime",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "slime-pink",
+      "name": "Pink Slime",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "teddy-brown",
+      "name": "Little Bear",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "teddy-pink",
+      "name": "Pink Bear",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "duck-yellow",
+      "name": "Rubber Ducky",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "ball-rainbow",
+      "name": "Bouncy Ball",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "yoyo-red",
+      "name": "Red Yo-yo",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "car-red",
+      "name": "Red Racer",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "slime-blue",
+      "name": "Blue Slime",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "car-blue",
+      "name": "Blue Zoomer",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "dino-green",
+      "name": "Mini Dino",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "ball-blue",
+      "name": "Blue Bouncer",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "brush-purple",
+      "name": "Sparkle Hairbrush",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 3,
+      "mysteryOnly": false
+    },
+    {
+      "id": "pen-troll-orange",
+      "name": "Troll Pen",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 3,
+      "mysteryOnly": false
+    },
+    {
+      "id": "plane-white",
+      "name": "Toy Airplane",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 4,
+      "mysteryOnly": false
+    },
+    {
+      "id": "ring-pink",
+      "name": "Sparkle Ring",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 4,
+      "mysteryOnly": false
+    },
+    {
+      "id": "eraser-strawberry",
+      "name": "Strawberry Eraser",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 5,
+      "mysteryOnly": false
+    },
+    {
+      "id": "plane-red",
+      "name": "Red Jet",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 7,
+      "mysteryOnly": false
+    },
+    {
+      "id": "slime-glitter",
+      "name": "Glitter Slime",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 6,
+      "mysteryOnly": false
+    },
+    {
+      "id": "car-race",
+      "name": "Race Car",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 7,
+      "mysteryOnly": false
+    },
+    {
+      "id": "teddy-big",
+      "name": "Big Bear",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 8,
+      "mysteryOnly": false
+    },
+    {
+      "id": "yoyo-rainbow",
+      "name": "Rainbow Yo-yo",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 9,
+      "mysteryOnly": false
+    },
+    {
+      "id": "glow-star",
+      "name": "Glow Star",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 10,
+      "mysteryOnly": false
+    },
+    {
+      "id": "unicorn-plush",
+      "name": "Unicorn Plush",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 11,
+      "mysteryOnly": false
+    },
+    {
+      "id": "dino-plush",
+      "name": "Dino Plush",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 12,
+      "mysteryOnly": false
+    },
+    {
+      "id": "fidget-pop",
+      "name": "Pop Fidget",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 13,
+      "mysteryOnly": false
+    },
+    {
+      "id": "squishy-cat",
+      "name": "Squishy Kitty",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 14,
+      "mysteryOnly": false
+    },
+    {
+      "id": "robot-mini",
+      "name": "Mini Robot",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 15,
+      "mysteryOnly": false
+    },
+    {
+      "id": "duck-pirate",
+      "name": "Pirate Ducky",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 16,
+      "mysteryOnly": false
+    },
+    {
+      "id": "rocket-toy",
+      "name": "Toy Rocket",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 18,
+      "mysteryOnly": false
+    },
+    {
+      "id": "teddy-giant",
+      "name": "Giant Bear",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 21,
+      "mysteryOnly": false
+    },
+    {
+      "id": "car-gold",
+      "name": "Golden Car",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 23,
+      "mysteryOnly": false
+    },
+    {
+      "id": "unicorn-rainbow",
+      "name": "Rainbow Unicorn",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 25,
+      "mysteryOnly": false
+    },
+    {
+      "id": "pen-troll-special",
+      "name": "Rainbow Troll Pen",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 27,
+      "mysteryOnly": false
+    },
+    {
+      "id": "slime-sparkle-set",
+      "name": "Sparkle Slime Set",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 29,
+      "mysteryOnly": false
+    },
+    {
+      "id": "robot-animated",
+      "name": "Dancing Robot",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 31,
+      "mysteryOnly": false
+    },
+    {
+      "id": "dragon-plush",
+      "name": "Magic Dragon",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 33,
+      "mysteryOnly": false
+    },
+    {
+      "id": "dino-glow",
+      "name": "Glow Dino",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 35,
+      "mysteryOnly": false
+    },
+    {
+      "id": "star-glow-big",
+      "name": "Giant Glow Star",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 37,
+      "mysteryOnly": false
+    },
+    {
+      "id": "teddy-golden",
+      "name": "Golden Teddy",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 10,
+      "mysteryOnly": true
+    },
+    {
+      "id": "unicorn-giant",
+      "name": "Giant Sparkle Unicorn",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 20,
+      "mysteryOnly": true
+    },
+    {
+      "id": "dragon-rainbow",
+      "name": "Rainbow Dragon",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 30,
+      "mysteryOnly": true
+    },
+    {
+      "id": "robot-hero",
+      "name": "Superhero Robot",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 40,
+      "mysteryOnly": true
+    },
+    {
+      "id": "chest-mystery",
+      "name": "Mystery Treasure Chest",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 50,
+      "mysteryOnly": true
+    },
+    {
+      "id": "slime-crystal",
+      "name": "Crystal Slime",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 47,
+      "mysteryOnly": false
+    },
+    {
+      "id": "car-gold-race",
+      "name": "Golden Race Car",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 49,
+      "mysteryOnly": false
+    },
+    {
+      "id": "bunny-white",
+      "name": "Fluffy Bunny",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "duck-blue",
+      "name": "Blue Ducky",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "top-red",
+      "name": "Spinning Top",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "cupcake-pink",
+      "name": "Cupcake Squishy",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "penguin-small",
+      "name": "Little Penguin",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "car-green",
+      "name": "Green Buggy",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 3,
+      "mysteryOnly": false
+    },
+    {
+      "id": "yoyo-blue",
+      "name": "Blue Yo-yo",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 3,
+      "mysteryOnly": false
+    },
+    {
+      "id": "icecream-mint",
+      "name": "Ice Cream Eraser",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 4,
+      "mysteryOnly": false
+    },
+    {
+      "id": "ball-star",
+      "name": "Star Ball",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 5,
+      "mysteryOnly": false
+    },
+    {
+      "id": "slime-orange",
+      "name": "Orange Slime",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 5,
+      "mysteryOnly": false
+    },
+    {
+      "id": "teddy-blue",
+      "name": "Blue Bear",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 6,
+      "mysteryOnly": false
+    },
+    {
+      "id": "pen-troll-green",
+      "name": "Green Troll Pen",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 6,
+      "mysteryOnly": false
+    },
+    {
+      "id": "panda-plush",
+      "name": "Panda Pal",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 7,
+      "mysteryOnly": false
+    },
+    {
+      "id": "octopus-plush",
+      "name": "Wiggly Octopus",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 8,
+      "mysteryOnly": false
+    },
+    {
+      "id": "cupcake-sprinkle",
+      "name": "Sprinkle Cupcake",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 11,
+      "mysteryOnly": false
+    },
+    {
+      "id": "bunny-squishy",
+      "name": "Bunny Squishy",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 12,
+      "mysteryOnly": false
+    },
+    {
+      "id": "icecream-rainbow",
+      "name": "Rainbow Ice Cream",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 13,
+      "mysteryOnly": false
+    },
+    {
+      "id": "top-rainbow",
+      "name": "Rainbow Top",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 14,
+      "mysteryOnly": false
+    },
+    {
+      "id": "penguin-glow",
+      "name": "Glow Penguin",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 16,
+      "mysteryOnly": false
+    },
+    {
+      "id": "dino-blue",
+      "name": "Blue Dino",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 17,
+      "mysteryOnly": false
+    },
+    {
+      "id": "car-police",
+      "name": "Police Car",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 19,
+      "mysteryOnly": false
+    },
+    {
+      "id": "octopus-glow",
+      "name": "Glow Octopus",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 24,
+      "mysteryOnly": false
+    },
+    {
+      "id": "panda-giant",
+      "name": "Giant Panda",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 26,
+      "mysteryOnly": false
+    },
+    {
+      "id": "penguin-king",
+      "name": "Emperor Penguin",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 32,
+      "mysteryOnly": false
+    },
+    {
+      "id": "icecream-galaxy",
+      "name": "Galaxy Ice Cream",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 36,
+      "mysteryOnly": false
+    },
+    {
+      "id": "rocket-gold",
+      "name": "Golden Rocket",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 38,
+      "mysteryOnly": false
+    },
+    {
+      "id": "bunny-crystal",
+      "name": "Crystal Bunny",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 44,
+      "mysteryOnly": false
+    },
+    {
+      "id": "octopus-rainbow",
+      "name": "Rainbow Octopus",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 46,
+      "mysteryOnly": false
+    },
+    {
+      "id": "puppy-tan",
+      "name": "Happy Puppy",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "kitty-orange",
+      "name": "Orange Kitty",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "frog-green",
+      "name": "Bouncy Frog",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "chick-yellow",
+      "name": "Baby Chick",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "donut-pink",
+      "name": "Pink Donut",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "lollipop-red",
+      "name": "Cherry Lollipop",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 3,
+      "mysteryOnly": false
+    },
+    {
+      "id": "heart-red",
+      "name": "Love Heart",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 3,
+      "mysteryOnly": false
+    },
+    {
+      "id": "bee-stripe",
+      "name": "Buzzy Bee",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 4,
+      "mysteryOnly": false
+    },
+    {
+      "id": "turtle-green",
+      "name": "Tiny Turtle",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 4,
+      "mysteryOnly": false
+    },
+    {
+      "id": "train-red",
+      "name": "Toy Train",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 5,
+      "mysteryOnly": false
+    },
+    {
+      "id": "owl-brown",
+      "name": "Hoot Owl",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 6,
+      "mysteryOnly": false
+    },
+    {
+      "id": "fox-orange",
+      "name": "Sly Fox",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 6,
+      "mysteryOnly": false
+    },
+    {
+      "id": "puppy-spot",
+      "name": "Spotty Puppy",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 7,
+      "mysteryOnly": false
+    },
+    {
+      "id": "kitty-grey",
+      "name": "Sleepy Kitty",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 8,
+      "mysteryOnly": false
+    },
+    {
+      "id": "monkey-plush",
+      "name": "Cheeky Monkey",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 9,
+      "mysteryOnly": false
+    },
+    {
+      "id": "helicopter-red",
+      "name": "Toy Helicopter",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 10,
+      "mysteryOnly": false
+    },
+    {
+      "id": "donut-choc",
+      "name": "Chocolate Donut",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 11,
+      "mysteryOnly": false
+    },
+    {
+      "id": "gem-sapphire",
+      "name": "Sapphire Gem",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 12,
+      "mysteryOnly": false
+    },
+    {
+      "id": "owl-snow",
+      "name": "Snow Owl",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 13,
+      "mysteryOnly": false
+    },
+    {
+      "id": "frog-blue",
+      "name": "Tree Frog",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 14,
+      "mysteryOnly": false
+    },
+    {
+      "id": "ufo-saucer",
+      "name": "Mini UFO",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 15,
+      "mysteryOnly": false
+    },
+    {
+      "id": "whale-blue",
+      "name": "Baby Whale",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 16,
+      "mysteryOnly": false
+    },
+    {
+      "id": "train-steam",
+      "name": "Steam Train",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 17,
+      "mysteryOnly": false
+    },
+    {
+      "id": "bee-sparkle",
+      "name": "Sparkle Bee",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 18,
+      "mysteryOnly": false
+    },
+    {
+      "id": "turtle-sea",
+      "name": "Sea Turtle",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 19,
+      "mysteryOnly": false
+    },
+    {
+      "id": "fox-arctic",
+      "name": "Arctic Fox",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 20,
+      "mysteryOnly": false
+    },
+    {
+      "id": "kitty-rainbow",
+      "name": "Rainbow Kitty",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 22,
+      "mysteryOnly": false
+    },
+    {
+      "id": "helicopter-sky",
+      "name": "Sky Helicopter",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 24,
+      "mysteryOnly": false
+    },
+    {
+      "id": "gem-ruby",
+      "name": "Ruby Gem",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 26,
+      "mysteryOnly": false
+    },
+    {
+      "id": "whale-glow",
+      "name": "Glow Whale",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 28,
+      "mysteryOnly": false
+    },
+    {
+      "id": "ufo-glow",
+      "name": "Glow UFO",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 32,
+      "mysteryOnly": false
+    },
+    {
+      "id": "heart-crystal",
+      "name": "Crystal Heart",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 34,
+      "mysteryOnly": false
+    },
+    {
+      "id": "monkey-king",
+      "name": "King Monkey",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 36,
+      "mysteryOnly": false
+    },
+    {
+      "id": "owl-night",
+      "name": "Night Owl",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 38,
+      "mysteryOnly": false
+    },
+    {
+      "id": "puppy-golden",
+      "name": "Golden Puppy",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 42,
+      "mysteryOnly": false
+    },
+    {
+      "id": "gem-rainbow",
+      "name": "Rainbow Gem",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 44,
+      "mysteryOnly": false
+    },
+    {
+      "id": "heart-gold",
+      "name": "Golden Heart",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 46,
+      "mysteryOnly": false
+    },
+    {
+      "id": "whale-star",
+      "name": "Star Whale",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 48,
+      "mysteryOnly": false
+    },
+    {
+      "id": "pig-pink",
+      "name": "Pink Piglet",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "mouse-grey",
+      "name": "Squeaky Mouse",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "balloon-red",
+      "name": "Red Balloon",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "cookie-choc",
+      "name": "Cookie Pal",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "mushroom-red",
+      "name": "Toadstool Pal",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "flower-yellow",
+      "name": "Sunny Flower",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 3,
+      "mysteryOnly": false
+    },
+    {
+      "id": "fish-orange",
+      "name": "Goldfish Pal",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 3,
+      "mysteryOnly": false
+    },
+    {
+      "id": "ladybug-red",
+      "name": "Lucky Ladybug",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 4,
+      "mysteryOnly": false
+    },
+    {
+      "id": "drum-blue",
+      "name": "Toy Drum",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 4,
+      "mysteryOnly": false
+    },
+    {
+      "id": "boat-white",
+      "name": "Toy Boat",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 5,
+      "mysteryOnly": false
+    },
+    {
+      "id": "koala-grey",
+      "name": "Sleepy Koala",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 6,
+      "mysteryOnly": false
+    },
+    {
+      "id": "lion-tan",
+      "name": "Little Lion",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 6,
+      "mysteryOnly": false
+    },
+    {
+      "id": "elephant-grey",
+      "name": "Baby Elephant",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 7,
+      "mysteryOnly": false
+    },
+    {
+      "id": "pig-sparkle",
+      "name": "Sparkle Pig",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 8,
+      "mysteryOnly": false
+    },
+    {
+      "id": "balloon-rainbow",
+      "name": "Rainbow Balloon",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 9,
+      "mysteryOnly": false
+    },
+    {
+      "id": "flower-pink",
+      "name": "Blossom Flower",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 10,
+      "mysteryOnly": false
+    },
+    {
+      "id": "fish-glow",
+      "name": "Glow Fish",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 12,
+      "mysteryOnly": false
+    },
+    {
+      "id": "cookie-sprinkle",
+      "name": "Sprinkle Cookie",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 13,
+      "mysteryOnly": false
+    },
+    {
+      "id": "boat-pirate",
+      "name": "Pirate Boat",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 14,
+      "mysteryOnly": false
+    },
+    {
+      "id": "drum-rainbow",
+      "name": "Rainbow Drum",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 15,
+      "mysteryOnly": false
+    },
+    {
+      "id": "crown-gold",
+      "name": "Toy Crown",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 16,
+      "mysteryOnly": false
+    },
+    {
+      "id": "mushroom-glow",
+      "name": "Glow Toadstool",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 17,
+      "mysteryOnly": false
+    },
+    {
+      "id": "koala-sleepy",
+      "name": "Dream Koala",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 18,
+      "mysteryOnly": false
+    },
+    {
+      "id": "ladybug-gold",
+      "name": "Golden Ladybug",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 19,
+      "mysteryOnly": false
+    },
+    {
+      "id": "lion-mane",
+      "name": "King Lion",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 22,
+      "mysteryOnly": false
+    },
+    {
+      "id": "elephant-big",
+      "name": "Giant Elephant",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 25,
+      "mysteryOnly": false
+    },
+    {
+      "id": "balloon-galaxy",
+      "name": "Galaxy Balloon",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 27,
+      "mysteryOnly": false
+    },
+    {
+      "id": "crown-ruby",
+      "name": "Ruby Crown",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 29,
+      "mysteryOnly": false
+    },
+    {
+      "id": "fish-rainbow",
+      "name": "Rainbow Fish",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 33,
+      "mysteryOnly": false
+    },
+    {
+      "id": "koala-crystal",
+      "name": "Crystal Koala",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 35,
+      "mysteryOnly": false
+    },
+    {
+      "id": "boat-gold",
+      "name": "Golden Boat",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 37,
+      "mysteryOnly": false
+    },
+    {
+      "id": "flower-crystal",
+      "name": "Crystal Flower",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 39,
+      "mysteryOnly": false
+    },
+    {
+      "id": "lion-golden",
+      "name": "Golden Lion",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 42,
+      "mysteryOnly": false
+    },
+    {
+      "id": "crown-rainbow",
+      "name": "Rainbow Crown",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 44,
+      "mysteryOnly": false
+    },
+    {
+      "id": "elephant-sparkle",
+      "name": "Sparkle Elephant",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 47,
+      "mysteryOnly": false
+    },
+    {
+      "id": "balloon-gold",
+      "name": "Golden Balloon",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 49,
+      "mysteryOnly": false
+    }
+  ],
+  "levels": [
+    {
+      "level": 1,
+      "world": "toybox",
+      "goal": 1,
+      "toyCount": 44
+    },
+    {
+      "level": 2,
+      "world": "toybox",
+      "goal": 1,
+      "toyCount": 45
+    },
+    {
+      "level": 3,
+      "world": "toybox",
+      "goal": 1,
+      "toyCount": 46
+    },
+    {
+      "level": 4,
+      "world": "toybox",
+      "goal": 2,
+      "toyCount": 47
+    },
+    {
+      "level": 5,
+      "world": "toybox",
+      "goal": 2,
+      "toyCount": 48
+    },
+    {
+      "level": 6,
+      "world": "toybox",
+      "goal": 2,
+      "toyCount": 49
+    },
+    {
+      "level": 7,
+      "world": "toybox",
+      "goal": 2,
+      "toyCount": 50
+    },
+    {
+      "level": 8,
+      "world": "toybox",
+      "goal": 2,
+      "toyCount": 50
+    },
+    {
+      "level": 9,
+      "world": "toybox",
+      "goal": 2,
+      "toyCount": 51
+    },
+    {
+      "level": 10,
+      "world": "toybox",
+      "goal": 2,
+      "toyCount": 52
+    },
+    {
+      "level": 11,
+      "world": "candy",
+      "goal": 3,
+      "toyCount": 53
+    },
+    {
+      "level": 12,
+      "world": "candy",
+      "goal": 3,
+      "toyCount": 54
+    },
+    {
+      "level": 13,
+      "world": "candy",
+      "goal": 3,
+      "toyCount": 54
+    },
+    {
+      "level": 14,
+      "world": "candy",
+      "goal": 3,
+      "toyCount": 55
+    },
+    {
+      "level": 15,
+      "world": "candy",
+      "goal": 3,
+      "toyCount": 56
+    },
+    {
+      "level": 16,
+      "world": "candy",
+      "goal": 3,
+      "toyCount": 57
+    },
+    {
+      "level": 17,
+      "world": "candy",
+      "goal": 3,
+      "toyCount": 58
+    },
+    {
+      "level": 18,
+      "world": "candy",
+      "goal": 3,
+      "toyCount": 58
+    },
+    {
+      "level": 19,
+      "world": "candy",
+      "goal": 3,
+      "toyCount": 59
+    },
+    {
+      "level": 20,
+      "world": "candy",
+      "goal": 3,
+      "toyCount": 60
+    },
+    {
+      "level": 21,
+      "world": "jungle",
+      "goal": 3,
+      "toyCount": 61
+    },
+    {
+      "level": 22,
+      "world": "jungle",
+      "goal": 3,
+      "toyCount": 62
+    },
+    {
+      "level": 23,
+      "world": "jungle",
+      "goal": 3,
+      "toyCount": 62
+    },
+    {
+      "level": 24,
+      "world": "jungle",
+      "goal": 3,
+      "toyCount": 63
+    },
+    {
+      "level": 25,
+      "world": "jungle",
+      "goal": 3,
+      "toyCount": 64
+    },
+    {
+      "level": 26,
+      "world": "jungle",
+      "goal": 3,
+      "toyCount": 65
+    },
+    {
+      "level": 27,
+      "world": "jungle",
+      "goal": 3,
+      "toyCount": 66
+    },
+    {
+      "level": 28,
+      "world": "jungle",
+      "goal": 3,
+      "toyCount": 66
+    },
+    {
+      "level": 29,
+      "world": "jungle",
+      "goal": 3,
+      "toyCount": 67
+    },
+    {
+      "level": 30,
+      "world": "jungle",
+      "goal": 3,
+      "toyCount": 68
+    },
+    {
+      "level": 31,
+      "world": "space",
+      "goal": 4,
+      "toyCount": 68
+    },
+    {
+      "level": 32,
+      "world": "space",
+      "goal": 4,
+      "toyCount": 69
+    },
+    {
+      "level": 33,
+      "world": "space",
+      "goal": 4,
+      "toyCount": 69
+    },
+    {
+      "level": 34,
+      "world": "space",
+      "goal": 4,
+      "toyCount": 70
+    },
+    {
+      "level": 35,
+      "world": "space",
+      "goal": 4,
+      "toyCount": 70
+    },
+    {
+      "level": 36,
+      "world": "space",
+      "goal": 4,
+      "toyCount": 70
+    },
+    {
+      "level": 37,
+      "world": "space",
+      "goal": 4,
+      "toyCount": 71
+    },
+    {
+      "level": 38,
+      "world": "space",
+      "goal": 4,
+      "toyCount": 71
+    },
+    {
+      "level": 39,
+      "world": "space",
+      "goal": 4,
+      "toyCount": 72
+    },
+    {
+      "level": 40,
+      "world": "space",
+      "goal": 4,
+      "toyCount": 72
+    },
+    {
+      "level": 41,
+      "world": "rainbow",
+      "goal": 4,
+      "toyCount": 73
+    },
+    {
+      "level": 42,
+      "world": "rainbow",
+      "goal": 4,
+      "toyCount": 74
+    },
+    {
+      "level": 43,
+      "world": "rainbow",
+      "goal": 4,
+      "toyCount": 74
+    },
+    {
+      "level": 44,
+      "world": "rainbow",
+      "goal": 4,
+      "toyCount": 75
+    },
+    {
+      "level": 45,
+      "world": "rainbow",
+      "goal": 4,
+      "toyCount": 76
+    },
+    {
+      "level": 46,
+      "world": "rainbow",
+      "goal": 4,
+      "toyCount": 77
+    },
+    {
+      "level": 47,
+      "world": "rainbow",
+      "goal": 4,
+      "toyCount": 78
+    },
+    {
+      "level": 48,
+      "world": "rainbow",
+      "goal": 4,
+      "toyCount": 78
+    },
+    {
+      "level": 49,
+      "world": "rainbow",
+      "goal": 4,
+      "toyCount": 79
+    },
+    {
+      "level": 50,
+      "world": "rainbow",
+      "goal": 4,
+      "toyCount": 80
+    }
+  ],
+  "worlds": [
+    {
+      "id": "toybox",
+      "name": "Toy Box Arcade",
+      "from": 1,
+      "to": 10,
+      "mysteryPrize": "teddy-golden",
+      "avatar": "race-driver"
+    },
+    {
+      "id": "candy",
+      "name": "Candy Carnival",
+      "from": 11,
+      "to": 20,
+      "mysteryPrize": "unicorn-giant",
+      "avatar": "sparkly-princess"
+    },
+    {
+      "id": "jungle",
+      "name": "Dinosaur Jungle",
+      "from": 21,
+      "to": 30,
+      "mysteryPrize": "dragon-rainbow",
+      "avatar": "silly-dino"
+    },
+    {
+      "id": "space",
+      "name": "Space Toy Station",
+      "from": 31,
+      "to": 40,
+      "mysteryPrize": "robot-hero",
+      "avatar": "astronaut"
+    },
+    {
+      "id": "rainbow",
+      "name": "Rainbow Treasure Arcade",
+      "from": 41,
+      "to": 50,
+      "mysteryPrize": "chest-mystery",
+      "avatar": "pirate-puppy"
+    }
+  ],
+  "avatars": [
+    {
+      "id": "baby-bear",
+      "name": "Baby Bear",
+      "rarity": "common",
+      "rule": {
+        "kind": "firstGrab"
+      }
+    },
+    {
+      "id": "slime-buddy",
+      "name": "Slime Buddy",
+      "rarity": "common",
+      "rule": {
+        "kind": "prizesCollected",
+        "count": 5
+      }
+    },
+    {
+      "id": "rainbow-unicorn",
+      "name": "Rainbow Unicorn",
+      "rarity": "uncommon",
+      "rule": {
+        "kind": "levelCleared",
+        "level": 5
+      }
+    },
+    {
+      "id": "robot-explorer",
+      "name": "Robot Explorer",
+      "rarity": "uncommon",
+      "rule": {
+        "kind": "levelCleared",
+        "level": 10
+      }
+    },
+    {
+      "id": "race-driver",
+      "name": "Race Car Driver",
+      "rarity": "rare",
+      "rule": {
+        "kind": "worldMystery",
+        "world": "toybox"
+      }
+    },
+    {
+      "id": "dino-champion",
+      "name": "Dinosaur Champion",
+      "rarity": "rare",
+      "rule": {
+        "kind": "uniquePrizes",
+        "count": 25
+      }
+    },
+    {
+      "id": "golden-claw",
+      "name": "Golden Claw",
+      "rarity": "rare",
+      "rule": {
+        "kind": "levelCleared",
+        "level": 20
+      }
+    },
+    {
+      "id": "sparkly-princess",
+      "name": "Sparkly Princess",
+      "rarity": "rare",
+      "rule": {
+        "kind": "worldMystery",
+        "world": "candy"
+      }
+    },
+    {
+      "id": "silly-dino",
+      "name": "Silly Dinosaur",
+      "rarity": "rare",
+      "rule": {
+        "kind": "worldMystery",
+        "world": "jungle"
+      }
+    },
+    {
+      "id": "dragon-master",
+      "name": "Dragon Master",
+      "rarity": "legendary",
+      "rule": {
+        "kind": "levelCleared",
+        "level": 30
+      }
+    },
+    {
+      "id": "astronaut",
+      "name": "Friendly Astronaut",
+      "rarity": "rare",
+      "rule": {
+        "kind": "worldMystery",
+        "world": "space"
+      }
+    },
+    {
+      "id": "pirate-puppy",
+      "name": "Pirate Puppy",
+      "rarity": "legendary",
+      "rule": {
+        "kind": "worldMystery",
+        "world": "rainbow"
+      }
+    },
+    {
+      "id": "claw-champion",
+      "name": "Legendary Claw Champion",
+      "rarity": "legendary",
+      "rule": {
+        "kind": "levelCleared",
+        "level": 50
+      }
+    }
+  ]
+}

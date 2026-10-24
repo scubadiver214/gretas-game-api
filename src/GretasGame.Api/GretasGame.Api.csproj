@@ -16,4 +16,9 @@
     <ProjectReference Include="..\GretasGame.ServiceDefaults\GretasGame.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Prize catalog, level goals and avatar rules exported from the web app (pnpm claw:export-content). -->
+    <EmbeddedResource Include="Claw\claw-content.json" />
+  </ItemGroup>
+
 </Project>

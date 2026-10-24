@@ -7,8 +7,9 @@
 ```
 apphost.cs                        Aspire AppHost (single-file): Postgres + pgweb, migrations, api, web
 src/
-  GretasGame.Api/                 Minimal API + Dapper (scores + game-session endpoints), Dockerfile
-  GretasGame.Migrations/          FluentMigrator migrations (players, scores, game_sessions)
+  GretasGame.Api/                 Minimal API + Dapper (scores, game-session and claw endpoints), Dockerfile
+                                  Claw/ embeds claw-content.json exported from the web app (prizes, levels, avatar rules)
+  GretasGame.Migrations/          FluentMigrator migrations (players, scores, game_sessions, claw_*)
   GretasGame.MigrationService/    Worker that creates the DB if needed and runs MigrateUp, then exits; Dockerfile
   GretasGame.ServiceDefaults/     Aspire service defaults (OpenTelemetry, health checks, resilience)
 tests/
@@ -63,6 +64,12 @@ Then open <http://localhost:3000>. The API is also exposed on <http://localhost:
 | POST   | `/api/games/{game}/sessions/{id}/complete` | `{ nickname, score, highestLevel, levelsCompleted, livesLost, durationSeconds }` -> validates, closes the session and inserts one `scores` row linked to it; returns `{ rank, isPersonalBest, previousBest }`. An identical retry returns the same answer; different results for a finished session are `409`, someone else's session `403`, unknown `404`, older than 4 hours `410`. |
 | GET    | `/api/games/{game}/players/{nickname}/stats` | `{ gamesPlayed, highestScore, highestLevel, totalScore, lastPlayedAt }` over finished sessions |
 | GET    | `/api/games/{game}/players/{nickname}/history?limit=20` | Most recent finished sessions, newest first (limit 1-100) |
+| GET    | `/api/claw/players/{nickname}/profile` | Claw arcade profile: `{ currentLevel, selectedAvatar, points, totalGrabs, successfulGrabs, prizes[], avatars[], levels[], mysteryWorldsWon[] }`. Unknown players get an empty level-1 profile. |
+| POST   | `/api/claw/players/{nickname}/attempts` | `{ character, color?, level, mystery? }` -> upserts the player, opens an attempt on an unlocked level (or a cleared world's mystery machine), returns `201 { attemptId, startedAt, level, kind }`. |
+| POST   | `/api/claw/attempts/{id}/grabs` | `{ nickname, seq, prizeId?, succeeded, elapsedSeconds }` -> records one grab; a win adds the prize to the collection, pays points and may unlock avatars. Returns `{ succeeded, prizeId, count, points, totalPoints, newAvatars }`. Repeating a `seq` replays the stored answer; a different result for the same `seq` is `409`. |
+| POST   | `/api/claw/attempts/{id}/complete` | `{ nickname, durationSeconds }` -> `{ stars, cleared, currentLevel, newAvatars, mysteryUnlocked }`. Clearing the player's current level unlocks the next one; clearing a world's last level opens its mystery machine. Safe to retry. |
+| PUT    | `/api/claw/players/{nickname}/avatar` | `{ character, color?, avatarId }` -> wear an unlocked avatar; returns the profile. |
+| PUT    | `/api/claw/players/{nickname}/prizes/{prizeId}/favorite` | `{ favorite }` -> star a collected prize (`204`, or `404` if not owned). |
 | GET    | `/health`, `/alive`              | Health checks (development only, from ServiceDefaults)       |
 | GET    | `/openapi/v1.json`               | OpenAPI document (development only)                          |
 
@@ -82,6 +89,18 @@ Session writes are rate limited to 30 requests per minute per client (first `X-F
 
 Known limitations: nicknames aren't authenticated, so ownership checks are only as strong as nickname identity (the same as the other games); a modified client can still post any result that passes the plausibility checks; sessions that are never completed stay `active` (they're ignored, and indexed for a future cleanup job).
 
+### Claw arcade
+
+Bea's Claw-some Adventure keeps the toy collection, avatars and level progress on the server (there is no leaderboard for it). A level is an *attempt*: the client opens it, posts each grab as the claw resolves it, and completes it. `Claw/ClawRules.cs` validates against the content embedded from the web app (`Claw/claw-content.json`, written by `pnpm claw:export-content` in the web repo and validated at startup):
+
+- a regular attempt must be on a level the player has unlocked (`claw_profiles.current_level`); a mystery attempt needs the world's last level cleared;
+- grabs must be numbered `1, 2, 3, ...` with no gaps, a won prize must exist, be unlocked by the attempt's level (or be that world's mystery prize), and grabs may not arrive faster than the claw can physically cycle (`minGrabCycleSeconds` from the content, with a few seconds of grace);
+- client play time may not exceed what the server has seen (+5 s); attempts expire after 6 hours.
+
+Completion pays stars (3 within goal + 1 grabs, 2 within goal + 3, else 1), advances `current_level` when the cleared level was the current one, and records the best result per level in `claw_levels`. Avatar milestones (`firstGrab`, `prizesCollected`, `uniquePrizes`, `levelCleared`, `worldMystery`) are evaluated from the player's tables after every won grab and every clear, so the server and the web game agree on exactly when an avatar unlocks; the first avatar earned is worn automatically. Claw writes are rate limited to 60 per minute per client (`RateLimits:Claw:PermitLimit`).
+
+Known limitations: the same nickname caveat as above - another device typing the same nickname shares that collection; prizes are awarded on the client's say-so within the plausibility checks; abandoned attempts stay `active` and are ignored.
+
 ## Database
 
 Migrations are plain FluentMigrator classes in `GretasGame.Migrations`:
@@ -91,6 +110,7 @@ Migrations are plain FluentMigrator classes in `GretasGame.Migrations`:
 - `M202609150003_AddColorLevelAndDailyChallenge` - `players.color`, `scores.level`, `scores.challenge_date` (+ check constraints and a daily-board index)
 - `M202609150004_AddWordleMode` - allows `wordle` scores
 - `M202610190001_AddGameSessions` - `game_sessions(id, player_id fk, mode, status active/completed, challenge_date, started_at, completed_at, final_score, highest_level, levels_completed, lives_lost, duration_seconds)` with a player/mode/completed index and a partial index on open sessions; `scores.session_id` (unique, fk); allows `frogger` scores and levels up to 99. Player stats are aggregated from `game_sessions` rather than stored.
+- `M202610240001_AddClawArcade` - `claw_profiles(player_id pk fk, current_level 1-50, selected_avatar, points, total_grabs, successful_grabs)`, `claw_prizes(player_id, prize_id, count, favorite, first/last_collected_at)`, `claw_avatars(player_id, avatar_id, unlocked_at)`, `claw_levels(player_id, level, stars 1-3, best_grabs, clears, first/last_cleared_at)`, `claw_attempts(id, player_id fk, level, kind level/mystery, world, status, started_at, completed_at, grabs, successes, stars, duration_seconds)` and `claw_grabs(id, attempt_id fk, client_seq, prize_id, succeeded, recorded_at)` with a unique `(attempt_id, client_seq)` so grab retries are no-ops. `scores` is untouched: the claw game has no leaderboard.
 
 Add a new migration by dropping a class with the next `[Migration(yyyyMMddNNNN)]` number into that project; the migration service applies it on the next start.
 
