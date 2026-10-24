@@ -902,6 +902,294 @@
       "points": 150,
       "unlockLevel": 48,
       "mysteryOnly": false
+    },
+    {
+      "id": "pig-pink",
+      "name": "Pink Piglet",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "mouse-grey",
+      "name": "Squeaky Mouse",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "balloon-red",
+      "name": "Red Balloon",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 1,
+      "mysteryOnly": false
+    },
+    {
+      "id": "cookie-choc",
+      "name": "Cookie Pal",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "mushroom-red",
+      "name": "Toadstool Pal",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 2,
+      "mysteryOnly": false
+    },
+    {
+      "id": "flower-yellow",
+      "name": "Sunny Flower",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 3,
+      "mysteryOnly": false
+    },
+    {
+      "id": "fish-orange",
+      "name": "Goldfish Pal",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 3,
+      "mysteryOnly": false
+    },
+    {
+      "id": "ladybug-red",
+      "name": "Lucky Ladybug",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 4,
+      "mysteryOnly": false
+    },
+    {
+      "id": "drum-blue",
+      "name": "Toy Drum",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 4,
+      "mysteryOnly": false
+    },
+    {
+      "id": "boat-white",
+      "name": "Toy Boat",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 5,
+      "mysteryOnly": false
+    },
+    {
+      "id": "koala-grey",
+      "name": "Sleepy Koala",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 6,
+      "mysteryOnly": false
+    },
+    {
+      "id": "lion-tan",
+      "name": "Little Lion",
+      "rarity": "common",
+      "points": 10,
+      "unlockLevel": 6,
+      "mysteryOnly": false
+    },
+    {
+      "id": "elephant-grey",
+      "name": "Baby Elephant",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 7,
+      "mysteryOnly": false
+    },
+    {
+      "id": "pig-sparkle",
+      "name": "Sparkle Pig",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 8,
+      "mysteryOnly": false
+    },
+    {
+      "id": "balloon-rainbow",
+      "name": "Rainbow Balloon",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 9,
+      "mysteryOnly": false
+    },
+    {
+      "id": "flower-pink",
+      "name": "Blossom Flower",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 10,
+      "mysteryOnly": false
+    },
+    {
+      "id": "fish-glow",
+      "name": "Glow Fish",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 12,
+      "mysteryOnly": false
+    },
+    {
+      "id": "cookie-sprinkle",
+      "name": "Sprinkle Cookie",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 13,
+      "mysteryOnly": false
+    },
+    {
+      "id": "boat-pirate",
+      "name": "Pirate Boat",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 14,
+      "mysteryOnly": false
+    },
+    {
+      "id": "drum-rainbow",
+      "name": "Rainbow Drum",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 15,
+      "mysteryOnly": false
+    },
+    {
+      "id": "crown-gold",
+      "name": "Toy Crown",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 16,
+      "mysteryOnly": false
+    },
+    {
+      "id": "mushroom-glow",
+      "name": "Glow Toadstool",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 17,
+      "mysteryOnly": false
+    },
+    {
+      "id": "koala-sleepy",
+      "name": "Dream Koala",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 18,
+      "mysteryOnly": false
+    },
+    {
+      "id": "ladybug-gold",
+      "name": "Golden Ladybug",
+      "rarity": "uncommon",
+      "points": 25,
+      "unlockLevel": 19,
+      "mysteryOnly": false
+    },
+    {
+      "id": "lion-mane",
+      "name": "King Lion",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 22,
+      "mysteryOnly": false
+    },
+    {
+      "id": "elephant-big",
+      "name": "Giant Elephant",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 25,
+      "mysteryOnly": false
+    },
+    {
+      "id": "balloon-galaxy",
+      "name": "Galaxy Balloon",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 27,
+      "mysteryOnly": false
+    },
+    {
+      "id": "crown-ruby",
+      "name": "Ruby Crown",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 29,
+      "mysteryOnly": false
+    },
+    {
+      "id": "fish-rainbow",
+      "name": "Rainbow Fish",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 33,
+      "mysteryOnly": false
+    },
+    {
+      "id": "koala-crystal",
+      "name": "Crystal Koala",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 35,
+      "mysteryOnly": false
+    },
+    {
+      "id": "boat-gold",
+      "name": "Golden Boat",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 37,
+      "mysteryOnly": false
+    },
+    {
+      "id": "flower-crystal",
+      "name": "Crystal Flower",
+      "rarity": "rare",
+      "points": 60,
+      "unlockLevel": 39,
+      "mysteryOnly": false
+    },
+    {
+      "id": "lion-golden",
+      "name": "Golden Lion",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 42,
+      "mysteryOnly": false
+    },
+    {
+      "id": "crown-rainbow",
+      "name": "Rainbow Crown",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 44,
+      "mysteryOnly": false
+    },
+    {
+      "id": "elephant-sparkle",
+      "name": "Sparkle Elephant",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 47,
+      "mysteryOnly": false
+    },
+    {
+      "id": "balloon-gold",
+      "name": "Golden Balloon",
+      "rarity": "legendary",
+      "points": 150,
+      "unlockLevel": 49,
+      "mysteryOnly": false
     }
   ],
   "levels": [
@@ -909,301 +1197,301 @@
       "level": 1,
       "world": "toybox",
       "goal": 1,
-      "toyCount": 12
+      "toyCount": 44
     },
     {
       "level": 2,
       "world": "toybox",
       "goal": 1,
-      "toyCount": 13
+      "toyCount": 45
     },
     {
       "level": 3,
       "world": "toybox",
       "goal": 1,
-      "toyCount": 14
+      "toyCount": 46
     },
     {
       "level": 4,
       "world": "toybox",
       "goal": 2,
-      "toyCount": 15
+      "toyCount": 47
     },
     {
       "level": 5,
       "world": "toybox",
       "goal": 2,
-      "toyCount": 15
+      "toyCount": 48
     },
     {
       "level": 6,
       "world": "toybox",
       "goal": 2,
-      "toyCount": 15
+      "toyCount": 49
     },
     {
       "level": 7,
       "world": "toybox",
       "goal": 2,
-      "toyCount": 16
+      "toyCount": 50
     },
     {
       "level": 8,
       "world": "toybox",
       "goal": 2,
-      "toyCount": 16
+      "toyCount": 50
     },
     {
       "level": 9,
       "world": "toybox",
       "goal": 2,
-      "toyCount": 17
+      "toyCount": 51
     },
     {
       "level": 10,
       "world": "toybox",
       "goal": 2,
-      "toyCount": 17
+      "toyCount": 52
     },
     {
       "level": 11,
       "world": "candy",
       "goal": 3,
-      "toyCount": 17
+      "toyCount": 53
     },
     {
       "level": 12,
       "world": "candy",
       "goal": 3,
-      "toyCount": 18
+      "toyCount": 54
     },
     {
       "level": 13,
       "world": "candy",
       "goal": 3,
-      "toyCount": 18
+      "toyCount": 54
     },
     {
       "level": 14,
       "world": "candy",
       "goal": 3,
-      "toyCount": 18
+      "toyCount": 55
     },
     {
       "level": 15,
       "world": "candy",
       "goal": 3,
-      "toyCount": 19
+      "toyCount": 56
     },
     {
       "level": 16,
       "world": "candy",
       "goal": 3,
-      "toyCount": 19
+      "toyCount": 57
     },
     {
       "level": 17,
       "world": "candy",
       "goal": 3,
-      "toyCount": 19
+      "toyCount": 58
     },
     {
       "level": 18,
       "world": "candy",
       "goal": 3,
-      "toyCount": 19
+      "toyCount": 58
     },
     {
       "level": 19,
       "world": "candy",
       "goal": 3,
-      "toyCount": 20
+      "toyCount": 59
     },
     {
       "level": 20,
       "world": "candy",
       "goal": 3,
-      "toyCount": 20
+      "toyCount": 60
     },
     {
       "level": 21,
       "world": "jungle",
       "goal": 3,
-      "toyCount": 20
+      "toyCount": 61
     },
     {
       "level": 22,
       "world": "jungle",
       "goal": 3,
-      "toyCount": 21
+      "toyCount": 62
     },
     {
       "level": 23,
       "world": "jungle",
       "goal": 3,
-      "toyCount": 21
+      "toyCount": 62
     },
     {
       "level": 24,
       "world": "jungle",
       "goal": 3,
-      "toyCount": 21
+      "toyCount": 63
     },
     {
       "level": 25,
       "world": "jungle",
       "goal": 3,
-      "toyCount": 22
+      "toyCount": 64
     },
     {
       "level": 26,
       "world": "jungle",
       "goal": 3,
-      "toyCount": 22
+      "toyCount": 65
     },
     {
       "level": 27,
       "world": "jungle",
       "goal": 3,
-      "toyCount": 22
+      "toyCount": 66
     },
     {
       "level": 28,
       "world": "jungle",
       "goal": 3,
-      "toyCount": 22
+      "toyCount": 66
     },
     {
       "level": 29,
       "world": "jungle",
       "goal": 3,
-      "toyCount": 23
+      "toyCount": 67
     },
     {
       "level": 30,
       "world": "jungle",
       "goal": 3,
-      "toyCount": 23
+      "toyCount": 68
     },
     {
       "level": 31,
       "world": "space",
       "goal": 4,
-      "toyCount": 23
+      "toyCount": 68
     },
     {
       "level": 32,
       "world": "space",
       "goal": 4,
-      "toyCount": 24
+      "toyCount": 69
     },
     {
       "level": 33,
       "world": "space",
       "goal": 4,
-      "toyCount": 24
+      "toyCount": 69
     },
     {
       "level": 34,
       "world": "space",
       "goal": 4,
-      "toyCount": 24
+      "toyCount": 70
     },
     {
       "level": 35,
       "world": "space",
       "goal": 4,
-      "toyCount": 25
+      "toyCount": 70
     },
     {
       "level": 36,
       "world": "space",
       "goal": 4,
-      "toyCount": 25
+      "toyCount": 70
     },
     {
       "level": 37,
       "world": "space",
       "goal": 4,
-      "toyCount": 25
+      "toyCount": 71
     },
     {
       "level": 38,
       "world": "space",
       "goal": 4,
-      "toyCount": 25
+      "toyCount": 71
     },
     {
       "level": 39,
       "world": "space",
       "goal": 4,
-      "toyCount": 26
+      "toyCount": 72
     },
     {
       "level": 40,
       "world": "space",
       "goal": 4,
-      "toyCount": 26
+      "toyCount": 72
     },
     {
       "level": 41,
       "world": "rainbow",
       "goal": 4,
-      "toyCount": 26
+      "toyCount": 73
     },
     {
       "level": 42,
       "world": "rainbow",
       "goal": 4,
-      "toyCount": 27
+      "toyCount": 74
     },
     {
       "level": 43,
       "world": "rainbow",
       "goal": 4,
-      "toyCount": 27
+      "toyCount": 74
     },
     {
       "level": 44,
       "world": "rainbow",
       "goal": 4,
-      "toyCount": 28
+      "toyCount": 75
     },
     {
       "level": 45,
       "world": "rainbow",
       "goal": 4,
-      "toyCount": 28
+      "toyCount": 76
     },
     {
       "level": 46,
       "world": "rainbow",
       "goal": 4,
-      "toyCount": 28
+      "toyCount": 77
     },
     {
       "level": 47,
       "world": "rainbow",
       "goal": 4,
-      "toyCount": 29
+      "toyCount": 78
     },
     {
       "level": 48,
       "world": "rainbow",
       "goal": 4,
-      "toyCount": 29
+      "toyCount": 78
     },
     {
       "level": 49,
       "world": "rainbow",
       "goal": 4,
-      "toyCount": 30
+      "toyCount": 79
     },
     {
       "level": 50,
       "world": "rainbow",
       "goal": 4,
-      "toyCount": 30
+      "toyCount": 80
     }
   ],
   "worlds": [
