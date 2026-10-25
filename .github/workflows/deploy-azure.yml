@@ -65,6 +65,7 @@ jobs:
           pnpm test
 
       - name: Azure login
+        id: azure-login
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -103,7 +104,10 @@ jobs:
             --name migrations
 
       - name: Show migration executions
-        if: always()
+        # Still runs when deploy or the migrations start fails, but only after
+        # Azure login succeeded. A test failure skips login, and `az` would
+        # otherwise exit with "Please run 'az login'".
+        if: ${{ !cancelled() && steps.azure-login.conclusion == 'success' }}
         env:
           AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
         run: |
