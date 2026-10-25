@@ -242,8 +242,10 @@ public sealed class ClawRepository(NpgsqlDataSource dataSource, ClawRules rules)
             if (attempt.DurationSeconds != r.DurationSeconds) return ClawResult<CompleteAttemptResponse>.Fail(ClawOutcome.Conflict);
             var level = await conn.ExecuteScalarAsync<int>(new CommandDefinition(
                 "SELECT current_level FROM claw_profiles WHERE player_id = @PlayerId;", new { attempt.PlayerId }, tx, cancellationToken: ct));
+            var replay = await WriteClawScoreAsync(conn, tx, attempt, r.DurationSeconds, ct);
             await tx.CommitAsync(ct);
-            return ClawResult<CompleteAttemptResponse>.Ok(new CompleteAttemptResponse(attempt.Stars ?? 0, attempt.Successes >= goal, level, [], null));
+            return ClawResult<CompleteAttemptResponse>.Ok(new CompleteAttemptResponse(
+                attempt.Stars ?? 0, attempt.Successes >= goal, level, [], null, replay.Score, replay.Rank, replay.IsPersonalBest));
         }
 
         var elapsed = attempt.Now - attempt.StartedAt;
@@ -286,8 +288,69 @@ public sealed class ClawRepository(NpgsqlDataSource dataSource, ClawRules rules)
         }
 
         var newAvatars = cleared ? await AwardMilestonesAsync(conn, tx, attempt.PlayerId, ct) : [];
+        var board = await WriteClawScoreAsync(conn, tx, attempt, r.DurationSeconds, ct);
         await tx.CommitAsync(ct);
-        return ClawResult<CompleteAttemptResponse>.Ok(new CompleteAttemptResponse(stars, cleared, currentLevel, newAvatars, mysteryUnlocked));
+        return ClawResult<CompleteAttemptResponse>.Ok(new CompleteAttemptResponse(
+            stars, cleared, currentLevel, newAvatars, mysteryUnlocked, board.Score, board.Rank, board.IsPersonalBest));
+    }
+
+    /// <summary>
+    /// One <c>scores</c> row per attempt, keyed by the attempt id so retries never
+    /// double-count. The points are the prizes already recorded on this attempt.
+    /// </summary>
+    private async Task<(int Score, long Rank, bool IsPersonalBest)> WriteClawScoreAsync(
+        NpgsqlConnection conn, NpgsqlTransaction tx, AttemptRow attempt, int durationSeconds, CancellationToken ct)
+    {
+        const string mode = "claw";
+        var existing = await conn.QuerySingleOrDefaultAsync<(Guid Id, int Score, DateTime CreatedAt)>(new CommandDefinition(
+            "SELECT id, score, created_at FROM scores WHERE id = @Id;",
+            new { attempt.Id }, tx, cancellationToken: ct));
+
+        int score;
+        Guid scoreId;
+        DateTime createdAt;
+        if (existing.Id != Guid.Empty)
+        {
+            score = existing.Score;
+            scoreId = existing.Id;
+            createdAt = existing.CreatedAt;
+        }
+        else
+        {
+            var prizes = await conn.QueryAsync<(string? PrizeId, bool Succeeded)>(new CommandDefinition(
+                "SELECT prize_id, succeeded FROM claw_grabs WHERE attempt_id = @Id;",
+                new { attempt.Id }, tx, cancellationToken: ct));
+            score = 0;
+            foreach (var grab in prizes)
+            {
+                if (!grab.Succeeded || string.IsNullOrEmpty(grab.PrizeId)) continue;
+                if (rules.Content.PrizeById.TryGetValue(grab.PrizeId, out var prize)) score += prize.Points;
+            }
+
+            scoreId = attempt.Id;
+            createdAt = await conn.ExecuteScalarAsync<DateTime>(new CommandDefinition(
+                """
+                INSERT INTO scores (id, player_id, mode, score, level, duration_seconds, challenge_date, created_at)
+                VALUES (@Id, @PlayerId, @Mode, @Score, @Level, @Duration, NULL, now())
+                RETURNING created_at;
+                """,
+                new
+                {
+                    Id = scoreId,
+                    attempt.PlayerId,
+                    Mode = mode,
+                    Score = score,
+                    attempt.Level,
+                    Duration = Math.Max(1, durationSeconds),
+                },
+                tx, cancellationToken: ct));
+        }
+
+        var previousBest = await conn.ExecuteScalarAsync<int?>(new CommandDefinition(
+            "SELECT MAX(score) FROM scores WHERE player_id = @PlayerId AND mode = @Mode AND id <> @Id;",
+            new { attempt.PlayerId, Mode = mode, Id = scoreId }, tx, cancellationToken: ct));
+        var rank = await ScoreRanking.RankAsync(conn, tx, mode, scoreId, score, createdAt, null, attempt.PlayerId, ct);
+        return (score, rank, previousBest is null || score > previousBest);
     }
 
     // ---------------------------------------------------------------------------

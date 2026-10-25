@@ -1,6 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using GretasGame.Api.Claw;
+using GretasGame.Api.Scores;
 
 namespace GretasGame.Api.Tests.Integration;
 
@@ -211,11 +212,31 @@ public sealed class ClawEndpointsTests(PostgresFixture fx)
         var body = await second.Content.ReadFromJsonAsync<CompleteAttemptResponse>();
         Assert.Equal(first!.Stars, body!.Stars);
         Assert.Equal(first.CurrentLevel, body.CurrentLevel);
+        Assert.Equal(first.Score, body.Score);
+        Assert.Equal(first.Rank, body.Rank);
         Assert.Equal(1, await fx.CountAsync("SELECT COUNT(*) FROM claw_levels l JOIN players p ON p.id = l.player_id WHERE p.nickname = @nick", new { nick }));
+        Assert.Equal(1, await fx.CountAsync("SELECT COUNT(*) FROM scores WHERE id = @id AND mode = 'claw'", new { id = attempt.AttemptId }));
         var conflicting = await CompleteAsync(client, attempt.AttemptId, nick, 9);
         Assert.Equal(HttpStatusCode.Conflict, conflicting.StatusCode);
         var late = await GrabAsync(client, attempt.AttemptId, nick, 2, null, false);
         Assert.Equal(HttpStatusCode.Conflict, late.StatusCode);
+    }
+
+    [Fact]
+    public async Task Completing_a_level_posts_the_points_to_the_claw_leaderboard()
+    {
+        using var client = fx.CreateClient();
+        var nick = Nick();
+        var done = await ClearLevelAsync(client, nick, 1);
+        Assert.True(done.Score > 0);
+        Assert.True(done.Rank >= 1);
+        Assert.True(done.IsPersonalBest);
+
+        var top = await client.GetFromJsonAsync<List<ScoreEntry>>("/api/scores/top?mode=claw&limit=100");
+        var mine = Assert.Single(top!, row => row.Nickname == nick);
+        Assert.Equal(done.Score, mine.Score);
+        Assert.Equal(done.Rank, mine.Rank);
+        Assert.Equal(1, mine.Level);
     }
 
     [Fact]

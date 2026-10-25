@@ -52,7 +52,7 @@ public class ScoreRulesTests
     }
 
     [Theory]
-    [InlineData("racing")]
+    [InlineData("pinball")]
     [InlineData("Kitchen")]
     public void Rejects_unknown_modes(string mode)
     {
@@ -60,13 +60,20 @@ public class ScoreRulesTests
         Assert.Contains(nameof(SubmitScoreRequest.Mode), errors.Keys);
     }
 
-    [Fact]
-    public void Rejects_direct_submits_for_session_games()
+    [Theory]
+    [InlineData("frogger")]
+    [InlineData("claw")]
+    public void Rejects_direct_submits_for_session_games(string mode)
     {
-        // Frogger has a leaderboard but its scores must come through a game session.
-        Assert.Contains("frogger", ScoreRules.LeaderboardModes);
-        var errors = ScoreRules.Validate(Valid() with { Mode = "frogger", Score = 100 });
+        Assert.Contains(mode, ScoreRules.LeaderboardModes);
+        var errors = ScoreRules.Validate(Valid() with { Mode = mode, Score = 100 });
         Assert.Contains(nameof(SubmitScoreRequest.Mode), errors.Keys);
+    }
+
+    [Fact]
+    public void Accepts_a_plausible_racing_submit()
+    {
+        Assert.Empty(ScoreRules.Validate(Valid() with { Mode = "racing", Score = 7800, DurationSeconds = 95, Level = 2 }));
     }
 
     [Theory]
@@ -78,6 +85,8 @@ public class ScoreRulesTests
     [InlineData("delivery", 99999, false)]
     [InlineData("wordle", 800, true)]
     [InlineData("wordle", 801, false)]
+    [InlineData("racing", 20000, true)]
+    [InlineData("racing", 20001, false)]
     public void Bounds_scores_per_mode(string mode, int score, bool ok)
     {
         var errors = ScoreRules.Validate(Valid() with { Mode = mode, Score = score });

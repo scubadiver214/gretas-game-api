@@ -19,14 +19,20 @@ public static partial class ScoreRules
     /// <summary>Daily-challenge submissions may be up to this many days old (time zones, slow finishes).</summary>
     public const int ChallengeDateGraceDays = 1;
 
-    /// <summary>Every game with a leaderboard.</summary>
-    public static readonly IReadOnlySet<string> LeaderboardModes = new HashSet<string>(StringComparer.Ordinal) { "kitchen", "delivery", "wordle", "frogger" };
+    /// <summary>Every game with a public leaderboard.</summary>
+    public static readonly IReadOnlySet<string> LeaderboardModes = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "kitchen", "delivery", "wordle", "frogger", "claw", "racing",
+    };
 
     /// <summary>
     /// Games whose clients post a finished round straight to <c>POST /api/scores</c>.
-    /// The rest (frogger) must go through a server-tracked game session.
+    /// The rest go through a server-tracked attempt (frogger sessions, claw arcade).
     /// </summary>
-    public static readonly IReadOnlySet<string> DirectSubmitModes = new HashSet<string>(StringComparer.Ordinal) { "kitchen", "delivery", "wordle" };
+    public static readonly IReadOnlySet<string> DirectSubmitModes = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "kitchen", "delivery", "wordle", "racing",
+    };
 
     public static readonly IReadOnlySet<string> Characters = new HashSet<string>(StringComparer.Ordinal) { "boy", "girl" };
 
@@ -39,6 +45,8 @@ public static partial class ScoreRules
         ["delivery"] = 5000,
         // Level 5: 5 words x (100 base + 20 length bonus) solved first try = 600.
         ["wordle"] = 800,
+        // Finish bonus 5,000 + coins + gems + a 300 s time bonus stays under 15,000.
+        ["racing"] = 20000,
     };
 
     [GeneratedRegex(@"^[\p{L}\p{N} _'-]+$")]
@@ -78,7 +86,7 @@ public static partial class ScoreRules
 
         if (string.IsNullOrEmpty(request.Mode) || !LeaderboardModes.Contains(request.Mode))
         {
-            errors.Add(nameof(request.Mode), $"Mode must be one of: {string.Join(", ", DirectSubmitModes)}.");
+            errors.Add(nameof(request.Mode), $"Mode must be one of: {string.Join(", ", LeaderboardModes)}.");
         }
         else if (!DirectSubmitModes.Contains(request.Mode))
         {
