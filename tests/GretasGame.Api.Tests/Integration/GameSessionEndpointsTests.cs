@@ -235,13 +235,19 @@ public sealed class GameSessionEndpointsTests(PostgresFixture fx)
     }
 
     [Fact]
-    public async Task Direct_score_submits_still_work_for_other_games_but_not_frogger()
+    public async Task Direct_score_submits_still_work_for_other_games_but_not_session_games()
     {
         using var client = fx.CreateClient();
         var kitchen = await client.PostAsJsonAsync("/api/scores", new SubmitScoreRequest(Nick(), "boy", "kitchen", 120, 45));
         Assert.Equal(HttpStatusCode.Created, kitchen.StatusCode);
 
+        var racing = await client.PostAsJsonAsync("/api/scores", new SubmitScoreRequest(Nick(), "girl", "racing", 7800, 95, Level: 2));
+        Assert.Equal(HttpStatusCode.Created, racing.StatusCode);
+
         var frogger = await client.PostAsJsonAsync("/api/scores", new SubmitScoreRequest(Nick(), "boy", "frogger", 120, 45));
         Assert.Equal(HttpStatusCode.BadRequest, frogger.StatusCode);
+
+        var claw = await client.PostAsJsonAsync("/api/scores", new SubmitScoreRequest(Nick(), "girl", "claw", 120, 45));
+        Assert.Equal(HttpStatusCode.BadRequest, claw.StatusCode);
     }
 }

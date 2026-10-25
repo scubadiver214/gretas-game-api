@@ -40,7 +40,12 @@ public sealed record CompleteAttemptResponse(
     int CurrentLevel,
     IReadOnlyList<string> NewAvatars,
     /// <summary>Set when this clear opened a world's mystery machine.</summary>
-    string? MysteryUnlocked);
+    string? MysteryUnlocked,
+    /// <summary>Points earned on this attempt (the public leaderboard score).</summary>
+    int Score,
+    /// <summary>1-based rank of this attempt on the claw all-time board.</summary>
+    long Rank,
+    bool IsPersonalBest);
 
 public sealed record SelectAvatarRequest(string Character, string? Color, string AvatarId);
 
