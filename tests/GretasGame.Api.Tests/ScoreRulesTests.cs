@@ -76,6 +76,12 @@ public class ScoreRulesTests
         Assert.Empty(ScoreRules.Validate(Valid() with { Mode = "racing", Score = 7800, DurationSeconds = 95, Level = 2 }));
     }
 
+    [Fact]
+    public void Accepts_a_plausible_hunting_submit()
+    {
+        Assert.Empty(ScoreRules.Validate(Valid() with { Mode = "hunting", Score = 2476, DurationSeconds = 34, Level = 2 }));
+    }
+
     [Theory]
     [InlineData("kitchen", -1, false)]
     [InlineData("kitchen", 0, true)]
@@ -87,6 +93,8 @@ public class ScoreRulesTests
     [InlineData("wordle", 801, false)]
     [InlineData("racing", 20000, true)]
     [InlineData("racing", 20001, false)]
+    [InlineData("hunting", 30000, true)]
+    [InlineData("hunting", 30001, false)]
     public void Bounds_scores_per_mode(string mode, int score, bool ok)
     {
         var errors = ScoreRules.Validate(Valid() with { Mode = mode, Score = score });

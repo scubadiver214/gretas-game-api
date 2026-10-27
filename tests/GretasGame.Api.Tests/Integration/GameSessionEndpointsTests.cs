@@ -244,6 +244,9 @@ public sealed class GameSessionEndpointsTests(PostgresFixture fx)
         var racing = await client.PostAsJsonAsync("/api/scores", new SubmitScoreRequest(Nick(), "girl", "racing", 7800, 95, Level: 2));
         Assert.Equal(HttpStatusCode.Created, racing.StatusCode);
 
+        var hunting = await client.PostAsJsonAsync("/api/scores", new SubmitScoreRequest(Nick(), "boy", "hunting", 2476, 34, Level: 2));
+        Assert.Equal(HttpStatusCode.Created, hunting.StatusCode);
+
         var frogger = await client.PostAsJsonAsync("/api/scores", new SubmitScoreRequest(Nick(), "boy", "frogger", 120, 45));
         Assert.Equal(HttpStatusCode.BadRequest, frogger.StatusCode);
 
