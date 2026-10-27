@@ -1,9 +1,9 @@
-#:sdk Aspire.AppHost.Sdk@13.5.4
-#:package Aspire.Hosting.PostgreSQL@13.5.4
-#:package Aspire.Hosting.JavaScript@13.5.4
-#:package Aspire.Hosting.Azure.AppContainers@13.5.4
-#:package Aspire.Hosting.Azure.PostgreSQL@13.5.4
-#:package Aspire.Hosting.Azure.ApplicationInsights@13.5.4
+#:sdk Aspire.AppHost.Sdk@13.6.4
+#:package Aspire.Hosting.PostgreSQL@13.6.4
+#:package Aspire.Hosting.JavaScript@13.6.4
+#:package Aspire.Hosting.Azure.AppContainers@13.6.4
+#:package Aspire.Hosting.Azure.PostgreSQL@13.6.4
+#:package Aspire.Hosting.Azure.ApplicationInsights@13.6.4
 #:project src/GretasGame.Api
 #:project src/GretasGame.MigrationService
 #:property AspireUseCliBundle=true
