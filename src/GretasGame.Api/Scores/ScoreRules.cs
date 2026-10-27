@@ -22,7 +22,7 @@ public static partial class ScoreRules
     /// <summary>Every game with a public leaderboard.</summary>
     public static readonly IReadOnlySet<string> LeaderboardModes = new HashSet<string>(StringComparer.Ordinal)
     {
-        "kitchen", "delivery", "wordle", "frogger", "claw", "racing",
+        "kitchen", "delivery", "wordle", "frogger", "claw", "racing", "hunting",
     };
 
     /// <summary>
@@ -31,7 +31,7 @@ public static partial class ScoreRules
     /// </summary>
     public static readonly IReadOnlySet<string> DirectSubmitModes = new HashSet<string>(StringComparer.Ordinal)
     {
-        "kitchen", "delivery", "wordle", "racing",
+        "kitchen", "delivery", "wordle", "racing", "hunting",
     };
 
     public static readonly IReadOnlySet<string> Characters = new HashSet<string>(StringComparer.Ordinal) { "boy", "girl" };
@@ -47,6 +47,9 @@ public static partial class ScoreRules
         ["wordle"] = 800,
         // Finish bonus 5,000 + coins + gems + a 300 s time bonus stays under 15,000.
         ["racing"] = 20000,
+        // Wild Adventure Hunting: the busiest level caps at 30 ducks; every duck a long-range x2 double
+        // plus all end bonuses stays near 21,000 (web: features/hunting/engine/scoring.ts scoreCeiling).
+        ["hunting"] = 30000,
     };
 
     [GeneratedRegex(@"^[\p{L}\p{N} _'-]+$")]
